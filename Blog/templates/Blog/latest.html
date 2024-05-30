@@ -4,33 +4,40 @@
 {% block head %}
 <style>
 body {
-    color:rgb(0, 0, 0);
-}
-.grid-container {
-    background: #e8b1b1;
-    max-width: 1150px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 600px 100px 100px 100px ;
+    color:black;
 
 }
-.grid-container > div {
-    background: #7d7c7c;
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #777  ;
+.picture {
+    max-width: 200px;
+    max-height: 150px;
+
 }
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
 </style>
 {% endblock %}
 
 {% block body %}
-<div class="grid-container">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
+
+<div class="articles">
+    {% for article in object_list %}
+    <ul>
+        <li>    
+            <a href="#"><h1> {{ article.title }}</h1></a>
+        </li> 
+        <li>
+            <h3> {{ article.subtitle }} </h3>
+        </li>
+        <li>
+            <img  class="picture" src="{{article.picture.url}}">
+        </li>
+    </ul>
+    {% endfor %}
 </div>
 {% endblock %}
 
