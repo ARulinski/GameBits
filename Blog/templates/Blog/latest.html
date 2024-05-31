@@ -30,6 +30,9 @@
   .article-title {
     margin-top: 0;
   }
+  .platform {
+    color: rgb(170, 168, 168);
+  }
 </style>
 {% endblock %}
 
@@ -46,6 +49,11 @@
       
       <p>Author: {{ article.author }}</p>
       <p>Date Posted: {{ article.date_posted }}</p>
+      <p class="platform">Platforms: 
+        {% for platform in article.platforms.all %}
+          {{ platform.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
       <!-- Add more details if needed -->
     </article>
   </div>
