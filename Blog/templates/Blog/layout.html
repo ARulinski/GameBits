@@ -13,12 +13,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
+          
         }
 
         body {
             font-family: Arial, sans-serif;
             background-color: azure;
             color: #ffffff;
+            display: block;
+            max-width: 100%;
+            
         }
 
         .navbar {
@@ -86,18 +91,17 @@
         }
 
         .header {
-            padding: 60px;
-            text-align: center;
-            text-shadow: 2px 2px black;
-            background: white url("{% static 'Blog/images/header.jpg' %}") no-repeat center center;
-            background-size: cover;
-            color: rgb(240, 240, 18);
-            font-size: 30px;
-            position: relative;
-            height: 200px;
-          
-            overflow: auto;
-        }
+    padding: 40px; /* Reduced padding for better mobile view */
+    text-align: center;
+    text-shadow: 2px 2px black;
+    background: white url("{% static 'Blog/images/header.jpg' %}") no-repeat center center;
+    background-size: cover;
+    color: rgb(240, 240, 18);
+    font-size: 24px; /* Slightly reduced font size */
+    position: relative;
+    height: auto; /* Adjusted to auto for dynamic height based on content */
+    overflow: hidden; /* Changed to hidden to prevent content overflow */
+}
 
         .avatar {
             vertical-align: middle;
@@ -249,6 +253,7 @@
             .navbar {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 15px;
             }
 
             .navbar-left,
