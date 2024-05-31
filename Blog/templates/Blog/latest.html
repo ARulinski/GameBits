@@ -3,109 +3,63 @@
 
 {% block head %}
 <style>
-    body {
-        color:azure;
-       
-    }
-.container {
-      display: grid;
-      margin: 40px;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto;
-      gap: 20px;
-      
-    }
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+  color: black;
+}
 
-    .heading {
-      grid-column: 1 / span 3;
-      background: black !important;
-     
-    }
+.heading {
+  text-align: center;
+}
 
-    .latest-news {
-      grid-column: 2;
-    }
+.article {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
 
-    .features {
-      grid-column: 3;
-    }
+.article h2 {
+  margin-top: 0;
+}
 
-    .upcoming-events {
-      grid-column: 2;
-    }
+.article .platforms {
+  font-style: italic;
+  color: gray;
+}
 
-    .forum-topics {
-      grid-column: 3;
-    }
-
-    .most-read {
-      grid-column: 2;
-    }
-
-    .guides {
-      grid-column: 3;
-    }
-
-    .popular-reviews {
-      grid-column: 2;
-    }
-
-    /* For demo purposes */
-    .container > div {
-      background-color: #f0f0f0;
-      padding: 20px;
-      border-radius: 5px;
-      margin-bottom: 10px;
-    }
-
-    .container h1 {
-      margin-top: 0;
-    }
-    .articles {
-      color: #f0f0f0 ;
-    }
-
+.article img {
+  width: 300px;
+  height: 200px;
+  display: block;
+  margin: 10px 0;
+}
 </style>
 {% endblock %}
 
 {% block body %}
-
-<div class="container">
-    <div class="heading">
-        <h1>Heading</h1>
-        <div class="articles">
-          <ul>
-            {% for aticles in object_list %}
-            <li>{{article.title}}</li>
-            {% endfor %}
-
-          </ul>
-        </div>
+<div class="grid-container">
+  <header class="heading">
+    <h1>Latest</h1>
+  </header>
+  {% for article in object_list %}
+  <div class="article">
+    <h2>{{ article.title }}</h2>
+    {% if article.picture %}
+      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+    {% endif %}
+    <div class="platforms">
+      {% for platform in article.platforms.all %}
+        {{ platform.name }}{% if not forloop.last %} | {% endif %}
+      {% endfor %}
     </div>
-    <div class="latest-news">
-        <h1>Latest</h1>
-    </div>
-    <div class="features">
-        <h1>Featuers</h1>
-    </div>
-    <div class="upcoming-events">
-        <h1>Upcoming Events</h1>
-    </div>
-    <div class="forum-topics">
-        <h1>Forum Topics</h1>
-    </div>
-    <div class="most-read">
-        <h1>Most read</h1>
-    </div>
-    <div class="guieds">
-        <h1>Guides</h1>
-    </div>
-    <div class="popular-reviews">
-        <h1>Popular Reviews</h1>
-    </div>
+    <p>Author: {{ article.author }}</p>
+    <p>Date Posted: {{ article.date_posted }}</p>
+  </div>
+  {% endfor %}
 </div>
-
-
-
 {% endblock %}
 
