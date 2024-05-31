@@ -3,8 +3,8 @@
 {% block head %}
 <style>
   body {
-    color: #000;
-    background-color: #fff;
+    color: #fff;
+    background-color: #1e1e1e;
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     margin: 0;
@@ -13,33 +13,51 @@
 
   .grid-container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 3fr 1fr;
     grid-gap: 20px;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
   }
 
-  .left-column, .right-column {
-    padding: 20px;
-    background-color: #f2f2f2;
-    border-radius: 8px;
+  .left-column {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .article {
-    margin-bottom: 30px;
-    background-color: #fff;
+    background-color: #2b2b2b;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Ensure image doesn't overflow */
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
   .article img {
     width: 100%;
-    max-width: 100%;
     height: auto;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    display: block;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f00;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 1;
   }
 
   .article-content {
@@ -48,38 +66,44 @@
 
   .article-title {
     margin-top: 0;
-    color: #333;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
   }
 
-  .subtitle {
-    font-style: italic;
+  .author-info {
     margin-top: 10px;
-    color: #666;
-    font-size: 16px;
-  }
-
-  .author-info, .platforms {
-    margin-top: 10px;
-    color: #999;
     font-size: 14px;
+    color: #ccc;
   }
 
-  .right-column h2 {
+  .platforms {
+    font-size: 14px;
+    color: #ccc;
+  }
+
+  .section-title {
     margin-top: 0;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 8px 8px 0 0;
+    color: #fff;
   }
 
-  @media only screen and (min-width: 768px) {
-    .grid-container {
-      grid-template-columns: 1fr 1fr;
-    }
+  .list-articles {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .list-articles h3 {
+    font-size: 18px;
+    color: #fff;
+    margin: 10px 0;
+  }
+
+  .list-articles p {
+    font-size: 14px;
+    color: #ccc;
   }
 </style>
 {% endblock %}
@@ -87,16 +111,13 @@
 {% block body %}
 <div class="grid-container">
   <div class="left-column">
-    <header>
-      <h1>Latest Articles</h1>
-    </header>
     {% for article in object_list %}
     <div class="article">
+      <span class="tag">{{ article.tag }}</span>
       <img src="{{ article.picture.url }}" alt="{{ article.title }}">
       <div class="article-content">
         <h2 class="article-title">{{ article.title }}</h2>
-        <p class="subtitle">{{ article.subtitle }}</p>
-        <p class="author-info">Author: {{ article.author }} | Date Posted: {{ article.date_posted }}</p>
+        <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
         <p class="platforms">Platforms: 
           {% for platform in article.platforms.all %}
             {{ platform.name }}{% if not forloop.last %}, {% endif %}
@@ -107,21 +128,41 @@
     {% endfor %}
   </div>
   <div class="right-column">
-    <div class="article">
-      <h2>News</h2>
-      <!-- Add news articles here -->
+    <div class="list-articles">
+      <h2 class="section-title">Latest</h2>
+      {% for article in news_articles %}
+      <div>
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.date_posted }}</p>
+      </div>
+      {% endfor %}
     </div>
-    <div class="article">
-      <h2>Guide</h2>
-      <!-- Add guide articles here -->
+    <div class="list-articles">
+      <h2 class="section-title">Reviews</h2>
+      {% for article in review_articles %}
+      <div>
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.date_posted }}</p>
+      </div>
+      {% endfor %}
     </div>
-    <div class="article">
-      <h2>Reviews</h2>
-      <!-- Add review articles here -->
+    <div class="list-articles">
+      <h2 class="section-title">Ratings</h2>
+      {% for article in rating_articles %}
+      <div>
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.date_posted }}</p>
+      </div>
+      {% endfor %}
     </div>
-    <div class="article">
-      <h2>Ratings</h2>
-      <!-- Add rating articles here -->
+    <div class="list-articles">
+      <h2 class="section-title">Guides</h2>
+      {% for article in guide_articles %}
+      <div>
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.date_posted }}</p>
+      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
