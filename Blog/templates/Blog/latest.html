@@ -3,18 +3,67 @@
 
 {% block head %}
 <style>
-body {
-    color:black;
-    background: rgb(131, 166, 196);
-   
-}
-.picture {
-    max-width: 200px;
-    max-height: 150px;
+    body {
+        color:azure;
+       
+    }
+.container {
+      display: grid;
+      margin: 40px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 20px;
+      
+    }
 
-}
+    .heading {
+      grid-column: 1 / span 3;
+      background: black !important;
+     
+    }
 
+    .latest-news {
+      grid-column: 2;
+    }
 
+    .features {
+      grid-column: 3;
+    }
+
+    .upcoming-events {
+      grid-column: 2;
+    }
+
+    .forum-topics {
+      grid-column: 3;
+    }
+
+    .most-read {
+      grid-column: 2;
+    }
+
+    .guides {
+      grid-column: 3;
+    }
+
+    .popular-reviews {
+      grid-column: 2;
+    }
+
+    /* For demo purposes */
+    .container > div {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .container h1 {
+      margin-top: 0;
+    }
+    .articles {
+      color: #f0f0f0 ;
+    }
 
 </style>
 {% endblock %}
@@ -24,9 +73,17 @@ body {
 <div class="container">
     <div class="heading">
         <h1>Heading</h1>
+        <div class="articles">
+          <ul>
+            {% for aticles in object_list %}
+            <li>{{article.title}}</li>
+            {% endfor %}
+
+          </ul>
+        </div>
     </div>
     <div class="latest-news">
-        <h1>Latest News</h1>
+        <h1>Latest</h1>
     </div>
     <div class="features">
         <h1>Featuers</h1>
