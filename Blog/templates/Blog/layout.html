@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- 
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,261 +8,285 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Gaming Blog</title>
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-   
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: azure;
-    color: #ffffff;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: azure;
+            color: #ffffff;
+        }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #000;
-    height: 60px;
-}
-.navbar-left {
-    display: flex;
-    align-items: center;
-}
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #000;
+            height: auto;
+        }
 
-.navbar-left .nav-link {
-    margin-right: 20px;
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 16px;
-    transition: color 0.3s;
-}
+        .navbar-left,
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
 
-.navbar-left .nav-link:hover {
-    color: #fdd835;
-  
-}
+        .navbar-left {
+            flex-wrap: wrap;
+        }
 
-.navbar-right .nav-button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    border: none;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
+        .nav-link {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
 
-.nav-button.login {
-    background-color: #000;
-    color: #fdd835;
-    border: 1px solid #fdd835;
-}
+        .nav-link:hover {
+            color: #fdd835;
+        }
 
-.nav-button.subscribe {
-    background-color: #fdd835;
-    color: #000;
-}
+        .nav-button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-.nav-button.login:hover {
-    background-color: #fdd835;
-    color: #000;
-}
+        .nav-button.login {
+            background-color: #000;
+            color: #fdd835;
+            border: 1px solid #fdd835;
+        }
 
-.nav-button.subscribe:hover {
-    background-color: #fff176;
-}
+        .nav-button.subscribe {
+            background-color: #fdd835;
+            color: #000;
+        }
 
-.header {
-    padding: 60px;
-    text-align: center;
-    text-shadow: 2px 2px black;
-    background: white url("static/Blog/images/header.jpg") no-repeat center center ;
-  
-    background-size: cover;
-    color: rgb(240, 240, 18);
-    font-size: 30px;
-    position: relative;
-    height: 200px; /* Adjust the height as needed */
-    overlay:auto;
-}
-.avatar {
-      vertical-align: middle;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border-color:#fdd835;
-      border-width: 2px;
-      border-style: solid ;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+        .nav-button.login:hover {
+            background-color: #fdd835;
+            color: #000;
+        }
 
-    .avatar:hover {
-      transform: scale(1.1);
-    }
+        .nav-button.subscribe:hover {
+            background-color: #fff176;
+        }
 
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 260px;
-      right: 0;
-      background-color: #000;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
+        .header {
+            padding: 60px;
+            text-align: center;
+            text-shadow: 2px 2px black;
+            background: white url("{% static 'Blog/images/header.jpg' %}") no-repeat center center;
+            background-size: cover;
+            color: rgb(240, 240, 18);
+            font-size: 30px;
+            position: relative;
+            height: 200px;
+            overflow: auto;
+        }
 
-    .dropdown-content a {
-      color: rgb(219, 219, 219);
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
+        .avatar {
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-color: #fdd835;
+            border-width: 2px;
+            border-style: solid;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
-    .dropdown-content a:hover {
-      background-color :#fdd835;
-      color: rgb(0, 0, 0);
-    }
+        .avatar:hover {
+            transform: scale(1.1);
+        }
 
-    .show {
-      display: block;
-    }
-.search-bar {
-    width: 300px;
-    height: 40px;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #000;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
 
+        .dropdown-content a {
+            color: rgb(219, 219, 219);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
 
-.button {
-	display: inline-block;
-	margin: 4px 2px;
-	background-color: #090909;
-	font-size: 14px;
-	padding-left: 32px;
-	padding-right: 32px;
-	height: 50px;
-	line-height: 50px;
-	text-align: center;
-	color: white;
-	text-decoration: none;
-	cursor: pointer;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
+        .dropdown-content a:hover {
+            background-color: #fdd835;
+            color: rgb(0, 0, 0);
+        }
 
-.button:hover {
-    color:#fdd835;
-	transition-duration: 0.4s;
-	-moz-transition-duration: 0.4s;
-	-webkit-transition-duration: 0.4s;
-	-o-transition-duration: 0.4s;
+        .show {
+            display: block;
+        }
 
-	
-}
+        .search-bar {
+            width: 300px;
+            height: 40px;
+        }
 
-.search-container {
-	position: relative;
-	display: inline-block;
-	margin: 4px 2px;
-	height: 50px;
-	width: 50px;
-	vertical-align: bottom;
-}
+        .button {
+            display: inline-block;
+            margin: 4px 2px;
+            background-color: #090909;
+            font-size: 14px;
+            padding-left: 32px;
+            padding-right: 32px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+        }
 
-.mglass {
-	display: inline-block;
-	pointer-events: none;
-	-webkit-transform: rotate(-45deg);
-	-moz-transform: rotate(-45deg);
-	-o-transform: rotate(-45deg);
-	-ms-transform: rotate(-45deg);
-}
+        .button:hover {
+            color: #fdd835;
+            transition-duration: 0.4s;
+        }
 
-.searchbutton {
-	position: absolute;
-	font-size: 30px;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-}
+        .search-container {
+            position: relative;
+            display: inline-block;
+            margin: 4px 2px;
+            height: 50px;
+            width: 50px;
+            vertical-align: bottom;
+        }
 
-.search:focus + .searchbutton {
-	transition-duration: 0.4s;
-	-moz-transition-duration: 0.4s;
-	-webkit-transition-duration: 0.4s;
-	-o-transition-duration: 0.4s;
-	background-color: white;
-	color: black;
-}
+        .mglass {
+            display: inline-block;
+            pointer-events: none;
+            transform: rotate(-45deg);
+        }
 
-.search {
-	position: absolute;
-	left: 49px; /* Button width-1px (Not 50px/100% because that will sometimes show a 1px line between the search box and button) */
-	background-color: rgb(255, 255, 255);
-	outline: none;
-	border: none;
-	padding: 0;
-	width: 0;
-	height: 100%;
-	z-index: 10;
-	transition-duration: 0.4s;
-	-moz-transition-duration: 0.4s;
-	-webkit-transition-duration: 0.4s;
-	-o-transition-duration: 0.4s;
-}
+        .searchbutton {
+            position: absolute;
+            font-size: 30px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-.search:focus {
-	width: 363px; /* Bar width+1px */
-	padding: 0 16px 0 0;
-}
+        .search:focus + .searchbutton {
+            transition-duration: 0.4s;
+            background-color: white;
+            color: black;
+        }
 
-.expandright {
-	left: auto;
-	right: 49px; /* Button width-1px */
-}
+        .search {
+            position: absolute;
+            left: 49px;
+            background-color: rgb(255, 255, 255);
+            outline: none;
+            border: none;
+            padding: 0;
+            width: 0;
+            height: 100%;
+            z-index: 10;
+            transition-duration: 0.4s;
+        }
 
-.expandright:focus {
-	padding: 0 0 0 16px;
-}
-.username {
-  color:#ffffff;
-}
-footer {
-    background-color: #282c34;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    width: 100%;
-    bottom: 0;
-}
-</style>
-{%  block head %}
-{% endblock %}
+        .search:focus {
+            width: 363px;
+            padding: 0 16px 0 0;
+        }
+
+        .expandright {
+            left: auto;
+            right: 49px;
+        }
+
+        .expandright:focus {
+            padding: 0 0 0 16px;
+        }
+
+        .username {
+            color: #ffffff;
+            margin-right: 10px;
+        }
+
+        footer {
+            background-color: #282c34;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar-left,
+            .navbar-right {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .navbar-left .nav-link,
+            .navbar-right .nav-button {
+                margin: 10px 0;
+            }
+
+            .search-container {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .header {
+                height: auto;
+                padding: 40px 20px;
+                font-size: 24px;
+            }
+
+            .dropdown-content {
+                top: 50px;
+                right: 10px;
+            }
+        }
+    </style>
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
-
 
     <div class="header">
         <h1>Game Bits</h1>
         <p>Your Gaming Blog</p>
-      </div>
+    </div>
     <!--Navigation bar-->
     <nav class="navbar">
         <div class="navbar-left">
-            <a href="{% url 'index' %}" class="nav-link"> <i class="fa-regular fa-newspaper"></i>  News</a>
-            <a href="{% url 'latest' %}" class="nav-link"><i class="fa-solid fa-newspaper"></i>  Latest</a>
+            <a href="{% url 'index' %}" class="nav-link"> <i class="fa-regular fa-newspaper"></i> News</a>
+            <a href="{% url 'latest' %}" class="nav-link"><i class="fa-solid fa-newspaper"></i> Latest</a>
             <a href="{% url 'latest' %}" class="nav-link"><i class="fa-solid fa-ranking-star"></i> Reviews</a>
-            <a href="#" class="nav-link"><i class="fa-solid fa-desktop"></i>  PC</a>
+            <a href="#" class="nav-link"><i class="fa-solid fa-desktop"></i> PC</a>
             <a href="#" class="nav-link"><i class="fa-brands fa-playstation"></i> Playstation</a>
-            <a href="#" class="nav-link"><i class="fa-brands fa-xbox"></i>  Xbox</a>
+            <a href="#" class="nav-link"><i class="fa-brands fa-xbox"></i> Xbox</a>
             <a href="#" class="nav-link"> <i class="fa-solid fa-gamepad"></i> Nintendo</a>
             <div class="search-container">
                 <form action="/search" method="get">
@@ -275,19 +298,16 @@ footer {
 
         {% if user.is_authenticated %}
         <div class="navbar-right">
-           <div class="navbar-right">
             <div class="dropdown">
-              <span class="username">{{ request.user.username }} </span>
-              <img src="{% static 'Blog/images/avatar5.jpeg' %}" alt="Avatar" class="avatar" onclick="toggleDropdown()"> 
-              <div id="myDropdown" class="dropdown-content">
-                <a href="#profile"><i class="fa-solid fa-user"></i> Your Profile </a>
-                <a href="#settings"><i class="fa-solid fa-bell"></i> Notifications</a>
-                <a href="#settings"><i class="fa-solid fa-gears"></i> Settings</a>
-                <a href="{% url 'logout_user' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-              </div>
+                <span class="username">{{ request.user.username }}</span>
+                <img src="{% static 'Blog/images/avatar5.jpeg' %}" alt="Avatar" class="avatar" onclick="toggleDropdown()">
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="#profile"><i class="fa-solid fa-user"></i> Your Profile </a>
+                    <a href="#settings"><i class="fa-solid fa-bell"></i> Notifications</a>
+                    <a href="#settings"><i class="fa-solid fa-gears"></i> Settings</a>
+                    <a href="{% url 'logout_user' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                </div>
             </div>
-          </div>
-           
         </div>
         {% else %}
         <div class="navbar-right">
@@ -298,26 +318,25 @@ footer {
     </nav>
     <script>
         function toggleDropdown() {
-          document.getElementById("myDropdown").classList.toggle("show");
+            document.getElementById("myDropdown").classList.toggle("show");
         }
-    
-        // Close the dropdown if the user clicks outside of it
+
         window.onclick = function(event) {
-          if (!event.target.matches('.avatar')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-              }
+            if (!event.target.matches('.avatar')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
             }
-          }
         }
-      </script>
+    </script>
     {% block body %}
     {% endblock %}
     <footer>
-      <p>&copy; 2024 Gaming Blog. All rights reserved.</p>
-  </footer>
+        <p>&copy; 2024 Gaming Blog. All rights reserved.</p>
+    </footer>
 </body>
 </html>

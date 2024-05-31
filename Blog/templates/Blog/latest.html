@@ -5,6 +5,7 @@
 <style>
 body {
     color:black;
+    background: rgb(131, 166, 196);
 
 }
 .picture {
@@ -12,32 +13,55 @@ body {
     max-height: 150px;
 
 }
-a {
-    text-decoration: none;
+.container {
+    background: azure;
+    padding: 20px;
+    width: 1000px;
+    margin-top: 10px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: ;
+    grid-template-rows: ;
+    
+
+
+
 }
-a:hover {
-    text-decoration: underline;
-}
+
 
 </style>
 {% endblock %}
 
 {% block body %}
 
-<div class="articles">
-    {% for article in object_list %}
-    <ul>
-        <li>    
-            <a href="#"><h1> {{ article.title }}</h1></a>
-        </li> 
-        <li>
-            <h3> {{ article.subtitle }} </h3>
-        </li>
-        <li>
-            <img  class="picture" src="{{article.picture.url}}">
-        </li>
-    </ul>
-    {% endfor %}
+<div class="container">
+    <div class="heading">
+        <h1>Heading</h1>
+    </div>
+    <div class="latest-news">
+        <h1>Latest News</h1>
+    </div>
+    <div class="features">
+        <h1>Featuers</h1>
+    </div>
+    <div class="upcoming-events">
+        <h1>Upcoming Events</h1>
+    </div>
+    <div class="forum-topics">
+        <h1>Forum Topics</h1>
+    </div>
+    <div class="most-read">
+        <h1>Most read</h1>
+    </div>
+    <div class="guieds">
+        <h1>Guides</h1>
+    </div>
+    <div class="popular-reviews">
+        <h1>Popular Reviews</h1>
+    </div>
 </div>
+
+
+
 {% endblock %}
 
