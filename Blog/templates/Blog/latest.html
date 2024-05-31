@@ -3,17 +3,21 @@
 
 {% block head %}
 <style>
+  body{
+    background-color:orange;
+  }
 .grid-container {
-  background-color: burlywood;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
   color: black;
+  
 }
 
 .heading {
   text-align: center;
+  grid-column: span 3;
 }
 
 .article {
@@ -21,6 +25,10 @@
   padding: 15px;
   border-radius: 5px;
   background-color: #f9f9f9;
+  /* Set background image */
+  background-size: cover;
+  background-position: center;
+  color:whitesmoke
 }
 
 .article h2 {
@@ -33,10 +41,20 @@
 }
 
 .article img {
-  width: 300px;
-  height: 200px;
-  display: block;
-  margin: 10px 0;
+  display: none; /* Hide image tag if using as background */
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 {% endblock %}
@@ -47,16 +65,15 @@
     <h1>Latest</h1>
   </header>
   {% for article in object_list %}
-  <div class="article">
+  <div class="article" style="background-image: url('{{ article.picture.url }}');">
     <h2>{{ article.title }}</h2>
-    {% if article.picture %}
-      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
-    {% endif %}
     <div class="platforms">
       {% for platform in article.platforms.all %}
-        {{ platform.name }}{% if not forloop.last %} | {% endif %}
+        {{ platform.name }}{% if not forloop.last %}, {% endif %}
       {% endfor %}
     </div>
+    <p>{{ article.subtitle }}</p>
+    <p>{{ article.content }}</p>
     <p>Author: {{ article.author }}</p>
     <p>Date Posted: {{ article.date_posted }}</p>
   </div>
