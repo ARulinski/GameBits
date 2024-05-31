@@ -29,6 +29,7 @@
             padding: 15px 30px;
             background-color: #000;
             height: auto;
+            position: relative;
         }
 
         .navbar-left,
@@ -40,6 +41,8 @@
         .navbar-left {
             flex-wrap: wrap;
         }
+       
+    
 
         .nav-link {
             margin-right: 20px;
@@ -92,7 +95,7 @@
             font-size: 30px;
             position: relative;
             height: 200px;
-            width: 1200px;
+          
             overflow: auto;
         }
 
@@ -281,6 +284,14 @@
                 display: block;
             }
         }
+        .right-fix {
+position: fixed;
+top: 0;
+right: 0;
+left: auto;
+z-index: 1030;
+margin-top: 15px;
+}
     </style>
     {% block head %}
     {% endblock %}
@@ -311,7 +322,7 @@
         </div>
 
         {% if user.is_authenticated %}
-        <div class="navbar-right">
+        <div class="navbar-right" class="right-fix">
             <div class="dropdown">
                 <span class="username">{{ request.user.username }}</span>
                 <img src="{% static 'Blog/images/avatar5.jpeg' %}" alt="Avatar" class="avatar" onclick="toggleDropdown()">
