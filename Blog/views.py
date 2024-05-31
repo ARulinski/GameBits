@@ -11,3 +11,7 @@ def index(request):
 class latest(ListView):
     model = Article 
     template_name = 'Blog/latest.html'
+
+class news(ListView):
+    model = Article 
+    template_name = 'Blog/news.html'
