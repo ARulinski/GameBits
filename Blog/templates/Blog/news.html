@@ -10,12 +10,24 @@
     padding: 0;
   }
 
+  .header-news {
+    background-color: #333;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header-news h1 {
+    font-size: 28px;
+    margin: 0;
+  }
+
   .grid-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 20px;
     max-width: 1200px;
-    margin: 30px auto;
+    margin: 0 auto; /* Removed top margin */
     padding: 0 20px;
   }
 
@@ -118,6 +130,9 @@
 {% endblock %}
 
 {% block body %}
+<div class="header-news">
+  <h1>Welcome to News Section</h1>
+</div>
 <div class="grid-container">
   <div class="left-column">
     {% for article in object_list %}
