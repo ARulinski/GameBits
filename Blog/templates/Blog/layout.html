@@ -349,6 +349,37 @@
             z-index: 1030;
             margin-top: 15px;
         }
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 36px; /* Decrease font size for smaller screens */
+            }
+            .navbar {
+                padding: 15px;
+            }
+            .navbar-left,
+            .navbar-right {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            .nav-link,
+            .nav-button {
+                margin: 10px 0;
+            }
+            .search-container {
+                margin: 10px 0;
+            }
+            .dropdown-content {
+                top: auto;
+                right: auto;
+                left: 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
     {% block head %}
     {% endblock %}
