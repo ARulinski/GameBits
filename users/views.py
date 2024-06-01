@@ -10,7 +10,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
            
-            return redirect('latest')
+            return redirect('news')
             
         else:
          
@@ -22,4 +22,4 @@ def login_view(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('index')
+    return redirect('news')
