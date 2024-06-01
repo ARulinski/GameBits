@@ -90,19 +90,26 @@
         }
         
         .full-site-nav {
-            background: #f2ecec; /* Dark background color */
-            color: rgb(84, 82, 82); /* White text color */
-            position: fixed;
-            top: 0;
-            height: 65px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center; /* Center items vertically */
-            z-index: 9999; /* Set a high z-index value to ensure it's on top of other elements */
-            transition: transform 0.3s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5); /* Add shadow for better visibility */
-        }
+    background: #f2ecec; /* Dark background color */
+    color: rgb(84, 82, 82); /* White text color */
+    position: fixed;
+    top: 0;
+    height: 65px;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the nav container */
+    align-items: center; /* Center items vertically */
+    z-index: 9999; /* Set a high z-index value to ensure it's on top of other elements */
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5); /* Add shadow for better visibility */
+}
+.full-site-nav .nav-container {
+    display: flex;
+    justify-content: space-between; /* Distribute icons evenly */
+    align-items: center;
+    max-width: 1100px; /* Set max width for the container */
+    width: 100%;
+}
 
         .full-site-nav .bloc-icon {
             display: flex;
@@ -121,7 +128,7 @@
 
         .full-site-nav .bloc-icon i {
             font-size: 22px; /* Adjust icon size */
-            max-width: 1000px;
+            
             
         }
 
@@ -173,46 +180,49 @@
 </head>
 <body>
     <nav class="full-site-nav">
-        <a href="#" class="bloc-icon active" onclick="changeColor(this)">
-            <i class="fas fa-home"></i><span>Home</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fas fa-newspaper"></i><span>News</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fas fa-star"></i><span>Reviews</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fas fa-star-half-alt"></i><span>Rating</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fa-solid fa-desktop"></i><span>PC</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fa-brands fa-playstation"></i><span>Playstation</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fa-brands fa-xbox"></i><span>Xbox</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="changeColor(this)">
-            <i class="fa-solid fa-gamepad"></i><span>Switch</span>
-        </a>
-        <a href="#" class="bloc-icon" onclick="toggleSearch()">
-            <i class="fas fa-search"></i><span>Search</span>
-        </a>
-        {% if user.is_authenticated%}
-        <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
-            <i class="fas fa-user"></i><span>Profile</span>
-        </a>
-        {% else %}
-        <a href="{% url 'login_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
-        <i class="fa-solid fa-right-to-bracket"></i><span>Login</span>
-        </a>
-        <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
-            <i class="fa-solid fa-user-plus"></i><span>Register</span>
+        <div class="nav-container">
+            <a href="#" class="bloc-icon active" onclick="changeColor(this)">
+                <i class="fas fa-home"></i><span>Home</span>
             </a>
-        {% endif %}
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fas fa-newspaper"></i><span>News</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fas fa-star"></i><span>Reviews</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fas fa-star-half-alt"></i><span>Rating</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fa-solid fa-desktop"></i><span>PC</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fa-brands fa-playstation"></i><span>Playstation</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fa-brands fa-xbox"></i><span>Xbox</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+                <i class="fa-solid fa-gamepad"></i><span>Switch</span>
+            </a>
+            <a href="#" class="bloc-icon" onclick="toggleSearch()">
+                <i class="fas fa-search"></i><span>Search</span>
+            </a>
+            {% if user.is_authenticated %}
+            <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
+                <i class="fas fa-user"></i><span>Profile</span>
+            </a>
+            {% else %}
+            <a href="{% url 'login_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
+                <i class="fa-solid fa-right-to-bracket"></i><span>Login</span>
+            </a>
+            <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
+                <i class="fa-solid fa-user-plus"></i><span>Register</span>
+            </a>
+            {% endif %}
+        </div>
     </nav>
+    
     
     
 
