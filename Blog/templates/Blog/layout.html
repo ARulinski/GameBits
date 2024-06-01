@@ -19,30 +19,54 @@
             background-color: #87CEEB; /* Sky blue background color */
         }
         .mobile-nav {
-            background: #F1F1F1;
-            color: black;
+            background: #333; /* Dark background color */
+            color: white; /* White text color */
             position: fixed;
             bottom: 0;
             height: 65px;
             width: 100%;
             display: flex;
             justify-content: space-around;
+            align-items: center; /* Center items vertically */
             z-index: 9999; /* Set a high z-index value to ensure it's on top of other elements */
             transition: transform 0.3s ease-in-out;
             transform: translateY(100%); /* Hide the navbar initially */
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.5); /* Add shadow for better visibility */
         }
         .bloc-icon {
             display: flex;
+            flex-direction: column; /* Stack icons and labels vertically */
             justify-content: center;
             align-items: center;
-            color: black;
-            transition: color 0.3s; /* Transition for color change */
+            color: white; /* White icon color */
+            transition: color 0.3s, transform 0.3s; /* Transition for color and transform */
+            font-size: 12px; /* Font size for labels */
+            text-decoration: none;
+            outline: none; /* Remove blue outline on mobile devices */
         }
         .bloc-icon i {
             font-size: 24px; /* Adjust icon size */
         }
-        .bloc-icon.active {
-            color: #ff1414; /* Change color when active */
+        .bloc-icon.active, .bloc-icon:hover {
+            color: #ff1493; /* Change color when active or hovered */
+            transform: scale(1.2); /* Scale up icon on hover */
+        }
+        .bloc-icon span {
+            margin-top: 2px; /* Space between icon and label */
+        }
+        .search-container {
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            display: none; /* Hide search input initially */
+            justify-content: center;
+        }
+        .search-input {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
         }
         @media screen and (min-width: 600px) {
             .mobile-nav {
@@ -54,36 +78,47 @@
     {% endblock %}
 </head>
 <body>
-<button onclick="myFunction()">Click me!</button>
 {% block body %}
 {% endblock %}
 <nav class="mobile-nav" id="mobileNav">
+    <div class="search-container" id="searchContainer">
+        <input type="text" class="search-input" placeholder="Search...">
+    </div>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-solid fa-home"></i> <!-- Font Awesome home icon -->
+        <span>Home</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-solid fa-newspaper"></i> <!-- Font Awesome news icon -->
+        <span>News</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-solid fa-clock"></i> <!-- Font Awesome latest icon -->
+        <span>Latest</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-solid fa-desktop"></i> <!-- Font Awesome profile icon -->
+        <span>Profile</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-brands fa-xbox"></i> <!-- Font Awesome Xbox icon -->
+        <span>Xbox</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-brands fa-playstation"></i> <!-- Font Awesome PlayStation icon -->
+        <span>PS</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fa-brands fa-nintendo-switch"></i> <!-- Font Awesome Nintendo icon -->
+        <i class="fa-solid fa-gamepad"></i> <!-- Font Awesome game pad icon -->
+        <span>Switch</span>
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
         <i class="fa-solid fa-desktop"></i> <!-- Font Awesome PC icon -->
+        <span>PC</span>
     </a>
-    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+    <a href="#" class="bloc-icon" onclick="toggleSearch()">
         <i class="fa-solid fa-search"></i> <!-- Font Awesome search icon -->
+        <span>Search</span>
     </a>
 </nav>
 <footer>
@@ -99,18 +134,28 @@
         element.classList.add('active');
     }
 
+    function toggleSearch() {
+        const searchContainer = document.getElementById('searchContainer');
+        if (searchContainer.style.display === "flex") {
+            searchContainer.style.display = "none";
+        } else {
+            searchContainer.style.display = "flex";
+        }
+    }
+
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.getElementById('searchContainer');
+        if (!event.target.closest('.bloc-icon') && searchContainer.style.display === "flex") {
+            searchContainer.style.display = "none";
+        }
+    });
+
     let lastScrollTop = 0;
     const mobileNav = document.getElementById('mobileNav');
 
     window.addEventListener('scroll', function() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > lastScrollTop) {
-            // Scroll down
-            mobileNav.style.transform = 'translateY(0)';
-        } else {
-            // Scroll up
-            mobileNav.style.transform = 'translateY(100%)';
-        }
+        mobileNav.style.transform = 'translateY(0)';
         lastScrollTop = scrollTop;
     });
 </script>
