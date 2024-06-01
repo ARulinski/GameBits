@@ -133,40 +133,43 @@
 </footer>
 
 <script>
-    function changeColor(element) {
-        const icons = document.querySelectorAll('.bloc-icon');
-        icons.forEach(icon => {
-            icon.classList.remove('active');
-        });
-        element.classList.add('active');
-    }
+  function changeColor(element) {
+      const icons = document.querySelectorAll('.bloc-icon');
+      icons.forEach(icon => {
+          icon.classList.remove('active');
+      });
+      element.classList.add('active');
+  }
 
-    function toggleSearch() {
-        const searchContainer = document.getElementById('searchContainer');
-        if (searchContainer.style.display === "flex") {
-            searchContainer.style.display = "none";
-        } else {
-            searchContainer.style.display = "flex";
-        }
-    }
+  function toggleSearch() {
+      const searchContainer = document.getElementById('searchContainer');
+      const searchInput = document.querySelector('.search-input');
+      if (searchContainer.style.display === "flex") {
+          searchContainer.style.display = "none";
+      } else {
+          searchContainer.style.display = "flex";
+          searchInput.focus(); // Set focus on the search input
+      }
+  }
 
-    document.addEventListener('click', function(event) {
-        const searchContainer = document.getElementById('searchContainer');
-        if (!event.target.closest('.bloc-icon') && searchContainer.style.display === "flex") {
-            searchContainer.style.display = "none";
-        }
-    });
+  document.addEventListener('click', function(event) {
+      const searchContainer = document.getElementById('searchContainer');
+      if (!event.target.closest('.bloc-icon') && searchContainer.style.display === "flex") {
+          searchContainer.style.display = "none";
+      }
+  });
 
-    let lastScrollTop = 0;
-    const mobileNav = document.getElementById('mobileNav');
-    const mobileNavTop = document.getElementById('mobileNavTop');
+  let lastScrollTop = 0;
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileNavTop = document.getElementById('mobileNavTop');
 
-    window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        mobileNav.style.transform = 'translateY(0)';
-        mobileNavTop.style.transform = 'translateY(0)';
-        lastScrollTop = scrollTop;
-    });
+  window.addEventListener('scroll', function() {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      mobileNav.style.transform = 'translateY(0)';
+      mobileNavTop.style.transform = 'translateY(0)';
+      lastScrollTop = scrollTop;
+  });
 </script>
+
 </body>
 </html>
