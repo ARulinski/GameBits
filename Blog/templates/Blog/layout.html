@@ -4,12 +4,10 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
     <title>Gaming Blog</title>
 
@@ -30,6 +28,8 @@
             display: flex;
             justify-content: space-around;
             z-index: 9999; /* Set a high z-index value to ensure it's on top of other elements */
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(100%); /* Hide the navbar initially */
         }
         .bloc-icon {
             display: flex;
@@ -57,30 +57,33 @@
 <button onclick="myFunction()">Click me!</button>
 {% block body %}
 {% endblock %}
-<nav class="mobile-nav">
+<nav class="mobile-nav" id="mobileNav">
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
+        <i class="fa-solid fa-home"></i> <!-- Font Awesome home icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fas fa-newspaper"></i> <!-- Font Awesome news icon -->
+        <i class="fa-solid fa-newspaper"></i> <!-- Font Awesome news icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fas fa-clock"></i> <!-- Font Awesome latest icon -->
+        <i class="fa-solid fa-clock"></i> <!-- Font Awesome latest icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fas fa-desktop"></i> <!-- Font Awesome profile icon -->
+        <i class="fa-solid fa-desktop"></i> <!-- Font Awesome profile icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fab fa-xbox"></i> <!-- Font Awesome Xbox icon -->
+        <i class="fa-brands fa-xbox"></i> <!-- Font Awesome Xbox icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fab fa-playstation"></i> <!-- Font Awesome PlayStation icon -->
+        <i class="fa-brands fa-playstation"></i> <!-- Font Awesome PlayStation icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fab fa-nintendo-switch"></i> <!-- Font Awesome Nintendo icon -->
+        <i class="fa-brands fa-nintendo-switch"></i> <!-- Font Awesome Nintendo icon -->
     </a>
     <a href="#" class="bloc-icon" onclick="changeColor(this)">
-        <i class="fas fa-user"></i> <!-- Font Awesome PC icon -->
+        <i class="fa-solid fa-desktop"></i> <!-- Font Awesome PC icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fa-solid fa-search"></i> <!-- Font Awesome search icon -->
     </a>
 </nav>
 <footer>
@@ -88,7 +91,28 @@
 </footer>
 
 <script>
-   
+    function changeColor(element) {
+        const icons = document.querySelectorAll('.bloc-icon');
+        icons.forEach(icon => {
+            icon.classList.remove('active');
+        });
+        element.classList.add('active');
+    }
+
+    let lastScrollTop = 0;
+    const mobileNav = document.getElementById('mobileNav');
+
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollTop > lastScrollTop) {
+            // Scroll down
+            mobileNav.style.transform = 'translateY(0)';
+        } else {
+            // Scroll up
+            mobileNav.style.transform = 'translateY(100%)';
+        }
+        lastScrollTop = scrollTop;
+    });
 </script>
 </body>
 </html>
