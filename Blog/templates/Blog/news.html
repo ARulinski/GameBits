@@ -8,8 +8,22 @@
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    padding-bottom: 60px;
+    padding-top: 60px;
+    
   }
+
+
+/* Adjust padding-top for larger screens */
+@media only screen and (min-width: 1200px) {
+  body {
+    padding-top: 60px; /* Adjusted value for larger screens */
+  }
+}
+@media only screen and (max-width: 600px) {
+  body {
+    padding-top: 0px; /* Adjusted value for smaller screens */
+  }
+}
 
   .header-news {
     background-color: #333;
