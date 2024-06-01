@@ -126,13 +126,34 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
   }
+
+  /* New styles for ad spaces */
+  .ad-space {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .ad-space.side {
+    grid-row: span 2;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
+<div class="ad-space top">
+  <!-- Top ad -->
+  <p>Top Ad</p>
+</div>
+
 <div class="header-news">
   <h1>Welcome to News Section</h1>
 </div>
+
 <div class="grid-container">
   <div class="left-column">
     {% for article in object_list %}
@@ -151,7 +172,12 @@
     </div>
     {% endfor %}
   </div>
+  
   <div class="right-column">
+    <div class="ad-space side">
+      <!-- Side ad -->
+      <p>Side Ad</p>
+    </div>
     <div class="list-articles">
       <h2 class="section-title">Latest</h2>
       {% for article in news_articles %}
@@ -189,5 +215,10 @@
       {% endfor %}
     </div>
   </div>
+</div>
+
+<div class="ad-space bottom">
+  <!-- Bottom ad -->
+  <p>Bottom Ad</p>
 </div>
 {% endblock %}

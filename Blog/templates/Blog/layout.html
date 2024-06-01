@@ -7,378 +7,46 @@
     <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     <title>Gaming Blog</title>
 
     <style>
-         body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Oxanium", sans-serif;
-    background-color: #121212;
-    color: #ffffff;
-    overflow-x: hidden;
-}
-
-.header h1,
-.header p,
-.nav-link,
-.nav-button,
-.username {
-    font-family: "Oxanium", sans-serif;
-}
-
-
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 50px 20px;
-            text-align: center;
-            color: #fdd835;
-            background: linear-gradient(135deg, #090f26, #1c0f2b); 
-            position: relative;
-            overflow: hidden;
-            max-width: 100%;
-        }
-
-        .header h1 {
-            font-size: 56px;
-            margin: 0;
-            text-transform: uppercase;
-            animation: glitch 1s infinite;
-        }
-
-        .header p {
-            font-size: 24px;
-            color: #ccc;
-            margin: 10px 0 0;
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px #ff0000, -2px -2px #0000ff; }
-            20% { text-shadow: -2px -2px #ff0000, 2px 2px #0000ff; }
-            40% { text-shadow: 2px 2px #ff0000, -2px -2px #0000ff; }
-            60% { text-shadow: -2px -2px #ff0000, 2px 2px #0000ff; }
-            80% { text-shadow: 2px 2px #ff0000, -2px -2px #0000ff; }
-            100% { text-shadow: -2px -2px #ff0000, 2px 2px #0000ff; }
-        }
-
-        .header:before,
-        .header:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.1);
-            mix-blend-mode: overlay;
-            pointer-events: none;
-        }
-
-        .header:after {
-            background: url("{% static 'Blog/images/overlay.png' %}") repeat;
-            opacity: 0.2;
-        }
-
-        .header .tagline {
-            font-size: 18px;
-            color: #888;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .navbar {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background-color: #000;
-            height: auto;
-            position: relative;
-        }
-
-        .navbar-right,
-        .navbar-left {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-left {
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            margin-right: 20px;
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: #0ff;
-        }
-
-        .nav-button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            border: none;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .nav-button.login {
-            background-color: #000;
-            color: #0ff;
-            border: 1px solid #0ff;
-        }
-
-        .nav-button.subscribe {
-            background-color: #0ff;
-            color: #000;
-        }
-
-        .nav-button.login:hover {
-            background-color: #0ff;
-            color: #000;
-        }
-
-        .nav-button.subscribe:hover {
-            background-color: #fff176;
-        }
-
-        .avatar {
-            vertical-align: middle;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border-color: #0ff;
-            border-width: 2px;
-            border-style: solid;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .avatar:hover {
-            transform: scale(1.1);
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 88px;
-            right: 0;
-            background-color: #000;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: rgb(219, 219, 219);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #0ff;
-            color: rgb(0, 0, 0);
-        }
-
-        .show {
-            display: block;
-        }
-
-        .search-bar {
-            width: 300px;
-            height: 40px;
-        }
-
-        .button {
-            display: inline-block;
-            margin: 4px 2px;
-            background-color: #090909;
-            font-size: 14px;
-            padding-left: 32px;
-            padding-right: 32px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .button:hover {
-            color: #0ff;
-            transition-duration: 0.4s;
-        }
-
-        .search-container {
-            position: relative;
-            display: inline-block;
-            margin: 4px 2px;
-            height: 50px;
-            width: 60px;
-            vertical-align: bottom;
-        }
-
-        .mglass {
-            display: inline-block;
-            pointer-events: none;
-            transform: rotate(-45deg);
-        }
-
-        .searchbutton {
-            position: absolute;
-            font-size: 30px;
-            width: 100%;
+        body {
             margin: 0;
             padding: 0;
+            font-family: 'Oxanium', sans-serif;
+            background-color: #87CEEB; /* Sky blue background color */
         }
-
-        .search:focus + .searchbutton {
-            transition-duration: 0.4s;
-            background-color: white;
+        .mobile-nav {
+            background: #F1F1F1;
             color: black;
-        }
-
-        .search {
-            position: absolute;
-            left: 49px;
-            background-color: rgb(255, 255, 255);
-            outline: none;
-            border: none;
-            padding: 0;
-            width: 0;
-            height: 100%;
-            z-index: 10;
-            transition-duration: 0.4s;
-        }
-
-        .search:focus {
-            width: 200px;
-            padding: 0 16px 0 0;
-        }
-
-        .expandright {
-            left: auto;
-            right: 49px;
-        }
-
-        .expandright:focus {
-            padding: 0 0 0 16px;
-        }
-
-        .username {
-            color: #ffffff;
-            margin-right: 10px;
-        }
-
-        footer {
-            background-color: #282c34;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            width: 100%;
-            bottom: 0;
-        }
-
-        .hamburger {
-            display: none;
-            font-size: 30px;
-            cursor: pointer;
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 15px;
-            }
-
-            .navbar-left,
-            .navbar-right {
-                flex-direction: column;
-                align-items: flex-start;
-                width: 100%;
-                display: none;
-            }
-
-            .navbar-left .nav-link,
-            .navbar-right .nav-button {
-                margin: 10px 0;
-            }
-
-            .search-container {
-                width: 100%;
-                margin: 10px 0;
-            }
-
-            .header {
-                height: auto;
-                padding: 40px 20px;
-                font-size: 24px;
-            }
-
-            .dropdown-content {
-                top: 50px;
-                right: 10px;
-            }
-
-            .hamburger {
-                display: block;
-            }
-        }
-
-        .right-fix {
             position: fixed;
-            top: 0;
-            right: 0;
-            left: auto;
-            z-index: 1030;
-            margin-top: 15px;
+            bottom: 0;
+            height: 65px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            z-index: 9999; /* Set a high z-index value to ensure it's on top of other elements */
         }
-        @media (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-            .header h1 {
-                font-size: 36px; /* Decrease font size for smaller screens */
-            }
-            .navbar {
-                padding: 15px;
-            }
-            .navbar-left,
-            .navbar-right {
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-            }
-            .nav-link,
-            .nav-button {
-                margin: 10px 0;
-            }
-            .search-container {
-                margin: 10px 0;
-            }
-            .dropdown-content {
-                top: auto;
-                right: auto;
-                left: 0;
-                width: 100%;
-                text-align: center;
+        .bloc-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            transition: color 0.3s; /* Transition for color change */
+        }
+        .bloc-icon i {
+            font-size: 24px; /* Adjust icon size */
+        }
+        .bloc-icon.active {
+            color: #ff1414; /* Change color when active */
+        }
+        @media screen and (min-width: 600px) {
+            .mobile-nav {
+                display: none;
             }
         }
     </style>
@@ -386,78 +54,41 @@
     {% endblock %}
 </head>
 <body>
+<button onclick="myFunction()">Click me!</button>
+{% block body %}
+{% endblock %}
+<nav class="mobile-nav">
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-newspaper"></i> <!-- Font Awesome news icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-clock"></i> <!-- Font Awesome latest icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-desktop"></i> <!-- Font Awesome profile icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fab fa-xbox"></i> <!-- Font Awesome Xbox icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fab fa-playstation"></i> <!-- Font Awesome PlayStation icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fab fa-nintendo-switch"></i> <!-- Font Awesome Nintendo icon -->
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-user"></i> <!-- Font Awesome PC icon -->
+    </a>
+</nav>
+<footer>
+    <p>&copy; 2024 Gaming Blog. All rights reserved.</p>
+</footer>
 
-    <div class="header">
-        <h1 class="neon">Game Bits</h1>
-        <p class="tagline">Your Ultimate Gaming Blog</p>
-    </div>
-    <!--Navigation bar-->
-    <nav class="navbar">
-        <span class="hamburger" onclick="toggleMenu()">&#9776;</span>
-        <div class="navbar-left">
-            <a href="{% url 'news' %}" class="nav-link"> <i class="fa-regular fa-newspaper"></i> News</a>
-            <a href="{% url 'latest' %}" class="nav-link"><i class="fa-solid fa-newspaper"></i> Latest</a>
-            <a href="{% url 'latest' %}" class="nav-link"><i class="fa-solid fa-ranking-star"></i> Reviews</a>
-            <a href="#" class="nav-link"><i class="fa-solid fa-desktop"></i> PC</a>
-            <a href="#" class="nav-link"><i class="fa-brands fa-playstation"></i> Playstation</a>
-            <a href="#" class="nav-link"><i class="fa-brands fa-xbox"></i> Xbox</a>
-            <a href="#" class="nav-link"> <i class="fa-solid fa-gamepad"></i> Nintendo</a>
-            <div class="search-container">
-                <form action="/search" method="get">
-                    <input class="search" id="searchleft" type="search" name="q" placeholder="Search">
-                    <label class="button searchbutton" for="searchleft"><span class="mglass">&#9906;</span></label>
-                </form>
-            </div>
-        </div>
-
-        {% if user.is_authenticated %}
-        <div class="navbar-right" class="right-fix">
-            <div class="dropdown">
-                <span class="username">{{ request.user.username }}</span>
-                <img src="{% static 'Blog/images/avatar5.jpeg' %}" alt="Avatar" class="avatar" onclick="toggleDropdown()">
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="#profile"><i class="fa-solid fa-user"></i> Your Profile</a>
-                    <a href="#settings"><i class="fa-solid fa-bell"></i> Notifications</a>
-                    <a href="#settings"><i class="fa-solid fa-gears"></i> Settings</a>
-                    <a href="{% url 'logout_user' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-                </div>
-            </div>
-        </div>
-        {% else %}
-        <div class="navbar-right">
-            <a href="{% url 'login_view' %}"><button class="nav-button login">Login</button></a>
-            <button class="nav-button subscribe">Subscribe</button>
-        </div>
-        {% endif %}
-    </nav>
-    <script>
-        function toggleMenu() {
-            const navbarLeft = document.querySelector('.navbar-left');
-            const navbarRight = document.querySelector('.navbar-right');
-            navbarLeft.style.display = navbarLeft.style.display === 'flex' ? 'none' : 'flex';
-            navbarRight.style.display = navbarRight.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.avatar')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
-    {% block body %}
-    {% endblock %}
-    <footer>
-        <p>&copy; 2024 Gaming Blog. All rights reserved.</p>
-    </footer>
+<script>
+   
+</script>
 </body>
 </html>
