@@ -198,10 +198,18 @@
         <a href="#" class="bloc-icon" onclick="toggleSearch()">
             <i class="fas fa-search"></i><span>Search</span>
         </a>
+        {% if user.is_authenticated%}
         <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
             <i class="fas fa-user"></i><span>Profile</span>
         </a>
-        
+        {% else %}
+        <a href="{% url 'login_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
+        <i class="fa-solid fa-right-to-bracket"></i><span>Login</span>
+        </a>
+        <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
+            <i class="fa-solid fa-user-plus"></i><span>Register</span>
+            </a>
+        {% endif %}
     </nav>
     
     
