@@ -9,6 +9,7 @@
     margin: 0;
     padding: 0;
     padding-top: 60px;
+    text-align: center;
     
   }
 
@@ -157,6 +158,16 @@
   .ad-space.side {
     grid-row: span 2;
   }
+  a {
+    text-decoration: none;
+    color: #fff; /* Set link color */
+  }
+
+  /* Hover effect for links */
+  a:hover {
+    text-decoration: underline;
+    color: #ff1493; /* Change color on hover */
+  }
 </style>
 {% endblock %}
 
@@ -177,7 +188,7 @@
       <span class="tag">{{ article.tag }}</span>
       <img src="{{ article.picture.url }}" alt="{{ article.title }}">
       <div class="article-content">
-        <h2 class="article-title">{{ article.title }}</h2>
+        <h2 class="article-title"><a href="{% url 'article_view' pk=article.pk %}">{{ article.title }}</a></h2>
         <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
         <p class="platforms">Platforms: 
           {% for platform in article.platforms.all %}

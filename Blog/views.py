@@ -15,3 +15,8 @@ class latest(ListView):
 class news(ListView):
     model = Article 
     template_name = 'Blog/news.html'
+
+
+class article_view(DetailView):
+    model = Article
+    template_name = 'Blog/article_view.html'

@@ -1,0 +1,37 @@
+{% extends 'Blog/layout.html' %}
+
+{% block head %}
+<style>
+    body {
+    color: #fff;
+    background-color: #1e1e1e;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px;
+    text-align: center;
+    
+    align-items: center;
+   
+    
+  }
+  /* Adjust padding-top for larger screens */
+@media only screen and (min-width: 1200px) {
+  body {
+    padding-top: 60px; /* Adjusted value for larger screens */
+  }
+}
+@media only screen and (max-width: 600px) {
+  body {
+    padding-top: 0px; /* Adjusted value for smaller screens */
+    padding-bottom: 60px;
+  }
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<h1>{{article.title}}</h1>
+<hr>
+<small>By: {{article.author}}</small>
+{% endblock %}
