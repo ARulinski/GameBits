@@ -68,6 +68,20 @@
             border-radius: 20px;
             font-size: 16px;
         }
+        .top-nav {
+            background: #333; /* Dark background color */
+            color: white; /* White text color */
+            position: fixed;
+            top: 0;
+            height: 65px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center; /* Center items vertically */
+            z-index: 9999; /* Set a high z-index value to ensure it's on top of other elements */
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5); /* Add shadow for better visibility */
+        }
         @media screen and (min-width: 600px) {
             .mobile-nav {
                 display: none;
@@ -80,6 +94,29 @@
 <body>
 {% block body %}
 {% endblock %}
+
+<nav class="top-nav" id="mobileNavTop">
+    <div class="search-container" id="searchContainerTop">
+        <input type="text" class="search-input" placeholder="Search...">
+    </div>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-user"></i> <!-- Font Awesome user icon -->
+        <span>Profile</span>
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-star"></i> <!-- Font Awesome star icon -->
+        <span>Reviews</span>
+    </a>
+    <a href="#" class="bloc-icon" onclick="changeColor(this)">
+        <i class="fas fa-book"></i> <!-- Font Awesome book icon -->
+        <span>Guide</span>
+    </a>
+    <a href="#" class="bloc-icon" onclick="toggleSearch()">
+        <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+        <span>Search</span>
+    </a>
+</nav>
+
 <nav class="mobile-nav" id="mobileNav">
     <div class="search-container" id="searchContainer">
         <input type="text" class="search-input" placeholder="Search...">
@@ -112,40 +149,42 @@
 <footer>
     <p>&copy; 2024 Gaming Blog. All rights reserved.</p>
 </footer>
-
-<script>
-    function changeColor(element) {
-        const icons = document.querySelectorAll('.bloc-icon');
-        icons.forEach(icon => {
-            icon.classList.remove('active');
-        });
-        element.classList.add('active');
-    }
-
-    function toggleSearch() {
-        const searchContainer = document.getElementById('searchContainer');
-        if (searchContainer.style.display === "flex") {
-            searchContainer.style.display = "none";
-        } else {
-            searchContainer.style.display = "flex";
-        }
-    }
-
-    document.addEventListener('click', function(event) {
-        const searchContainer = document.getElementById('searchContainer');
-        if (!event.target.closest('.bloc-icon') && searchContainer.style.display === "flex") {
-            searchContainer.style.display = "none";
-        }
-    });
-
-    let lastScrollTop = 0;
-    const mobileNav = document.getElementById('mobileNav');
-
-    window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        mobileNav.style.transform = 'translateY(0)';
-        lastScrollTop = scrollTop;
-    });
-</script>
-</body>
-</html>
+  <script>
+      function changeColor(element) {
+          const icons = document.querySelectorAll('.bloc-icon');
+          icons.forEach(icon => {
+              icon.classList.remove('active');
+          });
+          element.classList.add('active');
+      }
+  
+      function toggleSearch() {
+          const searchContainer = document.getElementById('searchContainer');
+          if (searchContainer.style.display === "flex") {
+              searchContainer.style.display = "none";
+          } else {
+              searchContainer.style.display = "flex";
+          }
+      }
+  
+      document.addEventListener('click', function(event) {
+          const searchContainer = document.getElementById('searchContainer');
+          if (!event.target.closest('.bloc-icon') && searchContainer.style.display === "flex") {
+              searchContainer.style.display = "none";
+          }
+      });
+  
+      let lastScrollTop = 0;
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileNavTop = document.getElementById('mobileNavTop');
+  
+      window.addEventListener('scroll', function() {
+          let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          mobileNav.style.transform = 'translateY(0)';
+          mobileNavTop.style.transform = 'translateY(0)';
+          lastScrollTop = scrollTop;
+      });
+  </script>
+  </body>
+  </html>
+  
