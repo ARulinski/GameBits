@@ -4,8 +4,8 @@ from .models import Article
 
 
 # Create your views here.
-def index(request):
-    return render(request, "Blog/index.html")
+def home(request):
+    return render(request, "Blog/home.html")
 
 
 class latest(ListView):

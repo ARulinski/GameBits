@@ -214,10 +214,10 @@
 <body>
     <nav class="full-site-nav">
         <div class="nav-container">
-            <a href="#" class="bloc-icon active" onclick="changeColor(this)">
+            <a href="{% url 'home' %}" class="bloc-icon active" onclick="changeColor(this)">
                 <i class="fas fa-home"></i><span>Home</span>
             </a>
-            <a href="#" class="bloc-icon" onclick="changeColor(this)">
+            <a href="{% url 'news' %}" class="bloc-icon" onclick="changeColor(this)">
                 <i class="fas fa-newspaper"></i><span>News</span>
             </a>
             <a href="#" class="bloc-icon" onclick="changeColor(this)">
@@ -271,7 +271,7 @@
   <div class="search-container" id="searchContainer">
       <input type="text" class="search-input" placeholder="Search...">
   </div>
-  <a href="#" class="bloc-icon" onclick="changeColor(this)">
+  <a href="{% url 'home' %}" class="bloc-icon" onclick="changeColor(this)">
       <i class="fas fa-home"></i>
       <span>Home</span>
   </a>
@@ -300,7 +300,7 @@
 {% block body %}
 {% endblock %}
 
-<footer>
+<footer style="text-align: center;">
     <p>&copy; 2024 Gaming Blog. All rights reserved.</p>
 </footer>
 

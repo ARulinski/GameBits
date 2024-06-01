@@ -1,0 +1,171 @@
+{% extends "Blog/layout.html" %}
+
+{% block head %}
+<style>
+  body {
+    color: #fff;
+    background-color: #1e1e1e;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 60px;
+  }
+
+  .header-news {
+    background-color: #333;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header-news h1 {
+    font-size: 28px;
+    margin: 0;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .section {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .section h2 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .article,
+  .review,
+  .guide {
+    margin-bottom: 20px;
+  }
+
+  .article img,
+  .review img,
+  .guide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .article-content,
+  .review-content,
+  .guide-content {
+    padding: 10px 0;
+  }
+
+  .article-title,
+  .review-title,
+  .guide-title {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .author-info,
+  .platforms {
+    font-size: 14px;
+    color: #ccc;
+  }
+
+  .game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .game img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  .game-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .game-company {
+    font-size: 14px;
+    color: #ccc;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="header-news">
+  <h1>Welcome to the Gaming Blog</h1>
+</div>
+
+<div class="grid-container">
+  <div class="section">
+    <h2>Latest Articles</h2>
+    {% for article in latest_articles %}
+      <div class="article">
+        <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+        <div class="article-content">
+          <h3 class="article-title">{{ article.title }}</h3>
+          <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="section">
+    <h2>Top Reviews</h2>
+    {% for review in top_reviews %}
+      <div class="review">
+        <img src="{{ review.picture.url }}" alt="{{ review.title }}">
+        <div class="review-content">
+          <h3 class="review-title">{{ review.title }}</h3>
+          <p class="author-info">By {{ review.author }} | {{ review.date_posted }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="section">
+    <h2>Guides</h2>
+    {% for guide in guides %}
+      <div class="guide">
+        <img src="{{ guide.picture.url }}" alt="{{ guide.title }}">
+        <div class="guide-content">
+          <h3 class="guide-title">{{ guide.title }}</h3>
+          <p class="author-info">By {{ guide.author }} | {{ guide.date_posted }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="section">
+    <h2>Top Games</h2>
+    {% for game in top_games %}
+      <div class="game">
+        <img src="{{ game.picture.url }}" alt="{{ game.title }}">
+        <div class="game-title">{{ game.title }}</div>
+        <div class="game-company">{{ game.company }}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Add more sections for advertisements, social media links, etc. -->
+</div>
+{% endblock %}
