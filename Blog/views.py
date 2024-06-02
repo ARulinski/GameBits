@@ -25,6 +25,4 @@ class add_article(CreateView):
     model = Article
     template_name = 'Blog/add_article.html'
     fields = '__all__'
-    widgets = {
-            'content': CKEditorWidget(),
-        }
+    
