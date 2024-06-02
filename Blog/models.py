@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import AbstractUser, CustomUser
+from django.urls import reverse
+from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 
@@ -38,9 +40,12 @@ class Article(models.Model):
     platforms = models.ManyToManyField(Platform)
     date_posted = models.DateTimeField()
     picture = models.ImageField(null=True, blank=True, upload_to='media/images')
-    content = models.TextField()
+    content = CKEditor5Field(null=True, config_name='extends')
     tag = models.CharField(max_length=20, choices=TAGS_CHOICES_DICT.items(), default="NEWS")
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
+    
+    def get_absolute_url(self):
+        return reverse('article_view', args=[str(self.pk)])
 

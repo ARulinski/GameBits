@@ -3,35 +3,93 @@
 {% block head %}
 <style>
     body {
-    color: #fff;
-    background-color: #1e1e1e;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    padding-top: 60px;
-    text-align: center;
-    
-    align-items: center;
-   
-    
-  }
-  /* Adjust padding-top for larger screens */
-@media only screen and (min-width: 1200px) {
-  body {
-    padding-top: 60px; /* Adjusted value for larger screens */
-  }
-}
-@media only screen and (max-width: 600px) {
-  body {
-    padding-top: 0px; /* Adjusted value for smaller screens */
-    padding-bottom: 60px;
-  }
-}
+        color: #ccc;
+        background-color: #000;
+        font-family: 'Roboto', sans-serif;
+        padding-top: 60px;
+    }
+    .article-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    .article-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: #ff8800; /* Cyberpunk orange */
+    }
+    .subtitle {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #ff8800;
+    }
+    .author, .date-posted, .platforms, .tags {
+        margin-bottom: 10px;
+        color: #fff;
+        font-size: 14px;
+    }
+    .author, .date-posted {
+        font-style: italic;
+    }
+    .content {
+        line-height: 1.6;
+        color: #ddd;
+    }
+    .content img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+    .platform-list, .tag-list {
+        display: inline;
+    }
+    .platform-item, .tag-item {
+        display: inline-block;
+        background-color: #ff8800;
+        color: #000;
+        border-radius: 4px;
+        padding: 2px 6px;
+        margin-right: 5px;
+    }
 </style>
 {% endblock %}
 
 {% block body %}
-<h1>{{article.title}}</h1>
-<hr>
-<small>By: {{article.author}}</small>
+<div class="article-container">
+    <div class="article-header">
+        <h1>{{ article.title }}</h1>
+        <div class="subtitle">{{ article.subtitle }}</div>
+    </div>
+    <div class="author">By: {{ article.author }}</div>
+    <div class="date-posted">Posted on: {{ article.date_posted|date:"F d, Y" }}</div>
+    <div class="platforms">
+        <strong>Platforms:</strong>
+        <span class="platform-list">
+            {% for platform in article.platforms.all %}
+                <span class="platform-item">{{ platform.name }}</span>
+            {% endfor %}
+        </span>
+    </div>
+    <div class="tags">
+        <strong>Tags:</strong>
+        <span class="tag-list">
+            <span class="tag-item">{{ article.get_tag_display }}</span>
+        </span>
+    </div>
+    <div class="content">
+        {% if article.picture %}
+            <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+        {% endif %}
+        {{ article.content | safe }}
+    </div>
+</div>
 {% endblock %}
