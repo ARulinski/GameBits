@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Article
-from ckeditor.widgets import CKEditorWidget
+
 
 # Create your views here.
 def home(request):
@@ -25,4 +25,3 @@ class add_article(CreateView):
     model = Article
     template_name = 'Blog/add_article.html'
     fields = '__all__'
-    

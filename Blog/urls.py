@@ -10,8 +10,10 @@ urlpatterns = [
     path("", views.home, name='home'),
     path('article_view/<int:pk>/', article_view.as_view(), name='article_view'),
     path("add_article", add_article.as_view(),name="add_article"),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    path("ckeditor5/", include('django_ckeditor_5.urls'))
+   
+   
+   
+    
     
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
