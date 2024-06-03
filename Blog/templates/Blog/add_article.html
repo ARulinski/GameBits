@@ -75,8 +75,10 @@
             {% csrf_token %}
             {{ form.as_p }}
             {{ form.media }}
-           
-            
+            <div class="form-group">
+                <label for="id_picture">Picture</label>
+                {{ form.picture }}
+            </div>
             <button type="submit" class="submit-btn">Post</button>
         </form>
     </div>

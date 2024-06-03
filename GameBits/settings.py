@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = []
-
+APPEND_SLASH=False
 
 # Application definition
 
@@ -46,25 +46,43 @@ INSTALLED_APPS = [
     "tinymce",
 ]
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5mb
+
 TINYMCE_DEFAULT_CONFIG = {
-    'custom_undo_redo_levels': 100,
-    'selector': 'textarea',
+    "entity_encoding": "raw",
     "menubar": "file edit view insert format tools table help",
-    'plugins': 'link image preview codesample contextmenu table code lists fullscreen',
-    'toolbar1': 'undo redo | backcolor casechange permanentpen formatpainter removeformat formatselect fontselect fontsizeselect',
-    'toolbar2': 'bold italic underline blockquote | alignleft aligncenter alignright alignjustify '
-               '| bullist numlist | outdent indent | table | link image | codesample | preview code | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry',
-    'contextmenu': 'formats | link image',
-    'block_formats': 'Paragraph=p; Header 1=h1; Header 2=h2',
-    'fontsize_formats': "8pt 10pt 12pt 14pt 16pt 18pt",
-    'content_style': "body { font-family: Arial; background: white; color: black; font-size: 12pt}",
-    'codesample_languages': [
-        {'text': 'Python', 'value': 'python'}, {'text': 'HTML/XML', 'value': 'markup'},],
-    'image_class_list': [{'title': 'Fluid', 'value': 'img-fluid', 'style': {} }],
-    'width': 'auto',
-    "height": "600px",
-    'image_caption': True,
-    "images_upload_url": "upload_image",
+    "plugins": 'print preview paste importcss searchreplace autolink autosave save code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap emoticons quickbars',
+    "toolbar": "fullscreen preview | undo redo | bold italic forecolor backcolor | formatselect | image link | "
+    "alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | fontsizeselect "
+    "emoticons | ",
+    "custom_undo_redo_levels": 50,
+    "quickbars_insert_toolbar": False,
+    "file_picker_callback": """function (cb, value, meta) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "file");
+        if (meta.filetype == "image") {
+            input.setAttribute("accept", "image/*");
+        }
+        if (meta.filetype == "media") {
+            input.setAttribute("accept", "video/*");
+        }
+
+        input.onchange = function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function () {
+                var id = "blobid" + (new Date()).getTime();
+                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(",")[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                cb(blobInfo.blobUri(), { title: file.name });
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }""",
+    "content_style": "body { font-family:Roboto,Helvetica,Arial,sans-serif; font-size:14px }",
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -147,13 +165,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_URL = "media/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
