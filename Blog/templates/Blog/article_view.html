@@ -1,32 +1,132 @@
-{% extends 'Blog/layout.html' %}
+{% extends "Blog/layout.html" %}
+
+{% block head %}
+<style>
+  body {
+    color: #fff;
+    background-color: #1e1e1e;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px;
+  }
+
+  @media only screen and (min-width: 1200px) {
+    body {
+      padding-top: 60px;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    body {
+      padding-top: 0;
+      padding-bottom: 60px;
+    }
+  }
+
+  .article-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .article-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .article-image img {
+    max-width: 100%; /* Adjust the width as needed */
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .article-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .article-header h1 {
+    font-size: 2.5em; /* Adjust the font size as needed */
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .article-header h1::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background-color: #ff1493;
+    margin: 10px auto 0;
+    border-radius: 2px;
+  }
+
+  .article-header .subtitle {
+    font-size: 1.2em;
+    color: #ccc;
+    margin-top: 10px;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: #999;
+  }
+
+  .article-meta div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .article-meta .author:before,
+  .article-meta .date-posted:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #333;
+    border-radius: 50%;
+  }
+</style>
+{% endblock %}
 
 {% block body %}
 <div class="article-container">
-    <div class="article-header">
-        <h1>{{ article.title }}</h1>
-        <div class="subtitle">{{ article.subtitle }}</div>
+  <div class="article-header">
+    <h1>{{ article.title }}</h1>
+    <div class="article-meta">
+      <div class="author">By: {{ article.author.name }}</div>
+      <div class="date-posted">Posted on: {{ article.date_posted|date:"F d, Y" }}</div>
     </div>
-    <div class="author">By: {{ article.author }}</div>
-    <div class="date-posted">Posted on: {{ article.date_posted|date:"F d, Y" }}</div>
-    <div class="platforms">
-        <strong>Platforms:</strong>
-        <span class="platform-list">
-            {% for platform in article.platforms.all %}
-                <span class="platform-item">{{ platform.name }}</span>
-            {% endfor %}
-        </span>
+  </div>
+  <div class="article-image">
+    {% if article.picture %}
+      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+    {% endif %}
+  </div>
+  <div class="content">
+    <div class="article-text">
+      {{ article.content | safe }}
     </div>
-    <div class="tags">
-        <strong>Tags:</strong>
-        <span class="tag-list">
-            <span class="tag-item">{{ article.get_tag_display }}</span>
-        </span>
-    </div>
-    <div class="content">
-        {% if article.picture %}
-            <img src="{{ MEDIA_URL }} {{ article.picture.url }}" alt="{{ article.title }}">
-        {% endif %}
-        {{ article.content | safe }}
-    </div>
+  </div>
+</div>
+
+<div class="ad-space bottom">
+  <!-- Bottom ad -->
+  <p>Bottom Ad</p>
 </div>
 {% endblock %}
