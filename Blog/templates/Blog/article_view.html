@@ -9,11 +9,12 @@
     margin: 0;
     padding: 0;
     padding-top: 60px;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
 
   @media only screen and (min-width: 1200px) {
     body {
-      padding-top: 60px;
+      padding-top: 80px;
     }
   }
 
@@ -24,16 +25,71 @@
     }
   }
 
-  .article-container {
+  .container {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 20px;
-    max-width: 900px;
-    margin: 0 auto;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    grid-template-areas: 
+      "article article aside"
+      "comments comments aside"
+      "footer footer footer";
     padding: 20px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .article-container {
+    grid-area: article;
     background-color: #2b2b2b;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .aside {
+    grid-area: aside;
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    gap: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .aside-box {
+    background-color: #2b2b2b;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .aside-box h3 {
+    margin-top: 0;
+  }
+
+  .comments {
+    grid-area: comments;
+    background-color: #2b2b2b;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  footer {
+    grid-area: footer;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .article-image {
@@ -43,7 +99,7 @@
   }
 
   .article-image img {
-    max-width: 100%; /* Adjust the width as needed */
+    max-width: 100%;
     height: auto;
     border-radius: 8px;
   }
@@ -54,21 +110,12 @@
   }
 
   .article-header h1 {
-    font-size: 2.5em; /* Adjust the font size as needed */
+    font-size: 2.5em;
     font-weight: 700;
     color: #fff;
     margin-bottom: 10px;
     position: relative;
-  }
-
-  .article-header h1::after {
-    content: '';
-    display: block;
-    width: 50px;
-    height: 2px;
-    background-color: #ff1493;
-    margin: 10px auto 0;
-    border-radius: 2px;
+    word-wrap: break-word;
   }
 
   .article-header .subtitle {
@@ -84,12 +131,14 @@
     font-size: 0.9em;
     margin-top: 10px;
     color: #999;
+    flex-wrap: wrap;
   }
 
   .article-meta div {
     display: flex;
     align-items: center;
     gap: 5px;
+    word-wrap: break-word;
   }
 
   .article-meta .author:before,
@@ -101,32 +150,109 @@
     background-color: #333;
     border-radius: 50%;
   }
+
+  hr {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      grid-template-areas:
+        "article"
+        "comments"
+        "aside"
+        "footer";
+      padding: 10px; /* Reduce padding on mobile */
+      gap: 10px; /* Reduce gap between elements */
+      overflow-x: hidden;
+    }
+
+    .article-header h1 {
+      font-size: 1.8em; /* Adjust font size for mobile */
+    }
+
+    .article-header .subtitle {
+      font-size: 1em; /* Adjust font size for mobile */
+    }
+
+    .article-meta {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .article-container,
+    .aside-box,
+    .comments {
+      padding: 10px; /* Reduce padding for boxes */
+      overflow: hidden;
+    }
+
+    .aside {
+      grid-template-rows: auto;
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 {% endblock %}
 
 {% block body %}
-<div class="article-container">
-  <div class="article-header">
-    <h1>{{ article.title }}</h1>
-    <div class="article-meta">
-      <div class="author">By: {{ article.author.name }}</div>
-      <div class="date-posted">Posted on: {{ article.date_posted|date:"F d, Y" }}</div>
+<div class="container">
+  
+  <div class="article-container">
+    <div class="article-header">
+      <h1>{{ article.title }}</h1>
+      <hr>
+      <h2>{{ article.subtitle }}</h2>
+      <div class="article-meta">
+        <div class="author">By: {{ article.author.name }}</div>
+        <div class="date-posted">Posted on: {{ article.date_posted|date:"F d, Y" }}</div>
+      </div>
+    </div>
+    
+    <div class="article-image">
+      {% if article.picture %}
+        <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+      {% endif %}
+    </div>
+    
+    <div class="content">
+      <div class="article-text">
+        {{ article.content | safe }}
+      </div>
     </div>
   </div>
-  <div class="article-image">
-    {% if article.picture %}
-      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
-    {% endif %}
-  </div>
-  <div class="content">
-    <div class="article-text">
-      {{ article.content | safe }}
-    </div>
-  </div>
-</div>
 
-<div class="ad-space bottom">
-  <!-- Bottom ad -->
-  <p>Bottom Ad</p>
+  <div class="comments">
+    <h2>Comments</h2>
+    <!-- Add comments section here -->
+  </div>
+  
+  <aside class="aside">
+    <div class="aside-box">
+      <h3>Latest Articles</h3>
+      <!-- Add latest articles here -->
+    </div>
+    <div class="aside-box">
+      <h3>Top Reviews</h3>
+      <!-- Add top reviews here -->
+    </div>
+    <div class="aside-box">
+      <h3>Guides</h3>
+      <!-- Add guides here -->
+    </div>
+    <div class="aside-box">
+      <h3>Top Games</h3>
+      <!-- Add top games here -->
+    </div>
+  </aside>
+  
+  <footer>
+    <p>&copy; 2024 My Blog</p>
+  </footer>
 </div>
 {% endblock %}

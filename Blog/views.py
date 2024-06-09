@@ -10,6 +10,8 @@ from django.core.files.base import ContentFile
 def home(request):
     return render(request, "Blog/home.html")
 
+def reviews(request):
+    return render(request, "Blog/reviews.html")
 
 class latest(ListView):
     model = Article 
@@ -28,10 +30,7 @@ class add_article(CreateView):
     model = Article
     template_name = 'Blog/add_article.html'
     fields = '__all__'
-    context = {
-        "object": Article,
-        "type": Article
-    }
+
     
 @csrf_exempt
 def upload_image(request):

@@ -11,6 +11,7 @@ urlpatterns = [
     path("latest/", latest.as_view(), name="latest"),
     path("", views.home, name='home'),
     path('article_view/<int:pk>/', article_view.as_view(), name='article_view'),
+    path('reviwes', views.reviews, name='reviews'),
     path("add_article/", add_article.as_view(), name="add_article"),
     path('/upload_image/', upload_image, name='upload_image'),
 ]
