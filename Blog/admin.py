@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Author, Platform
+from .models import Article, Author, Platform, Comment, Reply
 
 # Register your models here.
 
@@ -12,3 +12,5 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Author)
 admin.site.register(Platform)
+admin.site.register(Comment)
+admin.site.register(Reply)

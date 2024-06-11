@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "fontawesomefree",
     "tinymce",
+    
 ]
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5mb
@@ -96,6 +97,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
      "whitenoise.middleware.WhiteNoiseMiddleware",
+     
 ]
 
 ROOT_URLCONF = "GameBits.urls"

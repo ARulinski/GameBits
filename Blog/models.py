@@ -50,3 +50,21 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse('article_view', args=[str(self.pk)])
 
+class Comment(models.Model):
+    article =  models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")
+    name = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to={'status': 'regular'}, related_name="comments",)
+    body = models.CharField(max_length=300)
+    date_added = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' %  (self.article.title, self.name)
+
+class Reply(models.Model):
+    comment_name = models.ForeignKey(Comment, on_delete= models.CASCADE, related_name='replies')
+    name = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to= {'status': 'regular', 'status': 'moderator'}, related_name= 'replies' )
+    reply_body = models.TextField(max_length=500)
+    date_added = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return "by" + " " + str(self.name) + " |  " + "to" + " " + str(self.comment_name.name) + ' : ' + str(self.comment_name.article.title)
+    

@@ -4973,8 +4973,6 @@ readers do not read off random characters that represent icons */
 .fa-naira-sign::before {
   content: "\e1f6"; }
 
-.fa-cart-arrow-down::before {
-  content: "\f218"; }
 
 .fa-walkie-talkie::before {
   content: "\f8ef"; }

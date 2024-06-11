@@ -203,6 +203,62 @@
             }
         }
 
+/* Avatar and Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-bottom: 5px; /* Space between avatar and username */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0; /* Align the dropdown to the right */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Ensure profile link stays in place and doesn't affect the dropdown */
+.full-site-nav .bloc-icon.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Center the text below the avatar */
+}
+
+.full-site-nav .bloc-icon.profile span {
+    margin-left: 0; /* Remove left margin */
+    margin-top: 5px; /* Space between avatar and username */
+}
+
+@media screen and (max-width: 600px) {
+    .full-site-nav {
+        display: none; /* Hide full-site navbar on mobile */
+    }
+}
 
     </style>
     {% block head %}
@@ -239,23 +295,27 @@
                 <i class="fas fa-search"></i><span>Search</span>
             </a>
             {% if user.is_authenticated %}
-            <a href="{% url 'add_article'%}" class="bloc-icon" onclick="toggleSearch()">
-                <i class="fa-solid fa-skull"></i><span>Profile</span>
-            </a>   
-            
+            <div class="dropdown">
+                <div class="bloc-icon profile">
+                    <img src="{% static 'images/avatar5.jpeg' %}" alt="Profile" class="avatar">
+                    <span>{{ user.username }}</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="">Profile</a>
+                    <a href="">Settings</a>
+                    <a href="">Logout</a>
+                </div>
             </div>
             {% else %}
             <a href="{% url 'login_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
                 <i class="fa-solid fa-right-to-bracket"></i><span>Login</span>
             </a>
-            <a href="#" class="bloc-icon profile" onclick="changeColor(this)">
+            <a href="{% url 'register_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
                 <i class="fa-solid fa-user-plus"></i><span>Register</span>
             </a>
             {% endif %}
         </div>
     </nav>
-    
-    
     
 
 <nav class="mobile-nav" id="mobileNav">

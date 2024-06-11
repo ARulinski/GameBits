@@ -1250,8 +1250,7 @@ readers do not read off random characters that represent icons */
 .fa-phone-square-alt::before {
   content: "\f87b"; }
 
-.fa-cart-plus::before {
-  content: "\f217"; }
+
 
 .fa-gamepad::before {
   content: "\f11b"; }
