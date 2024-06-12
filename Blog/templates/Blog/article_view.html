@@ -197,6 +197,7 @@
       grid-template-columns: 1fr;
     }
   }
+
 </style>
 {% endblock %}
 
@@ -227,16 +228,12 @@
     </div>
   </div>
 
-  
   <div class="comments">
     <h2>Comments</h2> 
 
     {% include 'Blog/comment.html' %}
    
-  
-
-  </div>
-  
+  </div>  
   
   <aside class="aside">
     <div class="aside-box">
@@ -258,6 +255,21 @@
     </div>
   </aside>
   
+<script>
+ tinymce.PluginManager.add('imageresizing', function(editor, url) {
 
+editor.on('ObjectResizeStart', function(e) {
+    if (e.target.nodeName == 'IMG') {
+
+        var selectedImage = tinymce.activeEditor.selection.getNode();
+        tinymce.activeEditor.dom.setStyle(selectedImage,'width', e.width);
+        tinymce.activeEditor.dom.setStyle(selectedImage,'height', e.height);
+
+        selectedImage.removeAttribute('width');
+        selectedImage.removeAttribute('height');
+    }
+});
+});
+</script>
 </div>
 {% endblock %}
