@@ -1,11 +1,12 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Article
+from .models import Article, Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from .forms import CommentForm
 
 
 # Create your views here.   
@@ -24,19 +25,41 @@ class news(ListView):
     model = Article 
     template_name = 'Blog/news.html'
 
-
 class article_view(DetailView):
-    model = Article
-    template_name = 'Blog/article_view.html'
-   
+        model = Article
+        template_name = 'Blog/article_view.html'
+
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context['commentform'] = CommentForm()
+            return context
+        
+        def post(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            commentform = CommentForm(request.POST)
+            if commentform.is_valid():
+                comment = commentform.save(commit=False)
+                comment.name = request.user
+                comment.article = self.object
+                comment.save()
+                return redirect('article_view', pk=self.object.pk)
+            
+            context = self.get_context_data()
+            context['commentform'] = commentform
+            return render(request, self.template_name, context)
+
+
+
+
+
+        
+
 
 class add_article(CreateView):
     model = Article
     template_name = 'Blog/add_article.html'
     fields = '__all__'
 
-def cart(request):
-             pass
 
 @csrf_exempt
 def upload_image(request):

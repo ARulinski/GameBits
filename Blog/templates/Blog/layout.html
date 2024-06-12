@@ -13,6 +13,9 @@
     <title>Gaming Blog</title>
 
     <style>
+        html {
+  scroll-behavior: smooth;
+}
         body {
             margin: 0;
             padding: 0;
@@ -297,21 +300,21 @@
             {% if user.is_authenticated %}
             <div class="dropdown">
                 <div class="bloc-icon profile">
-                    <img src="{% static 'images/avatar5.jpeg' %}" alt="Profile" class="avatar">
-                    <span>{{ user.username }}</span>
+                    <img src="{{ user.avatar.url }}" alt="Profile" class="avatar">
+                   {{ user.username }}
                 </div>
                 <div class="dropdown-content">
                     <a href="">Profile</a>
                     <a href="">Settings</a>
                     <a href="{% url 'add_article' %}">Add Article</a>
-                    <a href="">Logout</a>
+                    <a href="{% url 'logout_user' %}">Logout</a>
                 </div>
             </div>
             {% else %}
             <a href="{% url 'login_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
                 <i class="fa-solid fa-right-to-bracket"></i><span>Login</span>
             </a>
-            <a href="" class="bloc-icon profile" onclick="changeColor(this)">
+            <a href="{% url 'register_view' %}" class="bloc-icon profile" onclick="changeColor(this)">
                 <i class="fa-solid fa-user-plus"></i><span>Register</span>
             </a>
             {% endif %}
@@ -327,7 +330,7 @@
       <i class="fas fa-home"></i>
       <span>Home</span>
   </a>
-  <a href="#" class="bloc-icon" onclick="changeColor(this)">
+  <a href="{% url 'news' %}" class="bloc-icon" onclick="changeColor(this)">
       <i class="fas fa-newspaper"></i>
       <span>News</span>
   </a>

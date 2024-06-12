@@ -1,7 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth import get_user_model
+from Blog.forms import  CustomUserCreationForm
 # Create your views here.
+
+CustomUser = get_user_model()
+
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login_view')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'users/register_view.html', {'form': form})
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -23,3 +37,5 @@ def login_view(request):
 def logout_user(request):
     logout(request)
     return redirect('news')
+
+

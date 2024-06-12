@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from users.models import AbstractUser, CustomUser
 from django.urls import reverse
@@ -52,12 +53,17 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article =  models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")
-    name = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to={'status': 'regular'}, related_name="comments",)
-    body = models.CharField(max_length=300)
+    name = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="comments")
+    body = models.CharField(max_length=800)
     date_added = models.DateField(auto_now_add=True)
+    id = models.CharField(max_length=100, default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return '%s - %s' %  (self.article.title, self.name)
+        try:
+            return f'{self.name.username} {self.body}'
+        except:
+            return f'Anonymous : {self.body}'
+
 
 class Reply(models.Model):
     comment_name = models.ForeignKey(Comment, on_delete= models.CASCADE, related_name='replies')

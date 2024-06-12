@@ -1,0 +1,161 @@
+{% load static %}
+<style>
+    .comment-section {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        max-height: 400px; 
+        overflow-y: auto; 
+    }
+
+    .comment {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        color: black;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .comment .comment-content {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .comment-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .avatar1 {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+
+    .username {
+        color: #dc41e1;
+        font-weight: bold;
+    }
+
+   
+
+    .comment-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .comment-actions .action-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        cursor: pointer;
+        color: #131313;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .comment-actions .action-item i {
+        margin-right: 5px;
+    }
+
+    .comment-actions .action-item:hover {
+        color: #716f71;
+    }
+
+    .comment-form {
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-form textarea {
+        width: 100%;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        color: black;
+        box-sizing: border-box;
+    }
+
+    .comment-form button {
+        background-color: #dc41e1;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 600px) {
+        .comment-section, .comment-form {
+            padding: 10px;
+        }
+
+        .comment {
+            padding: 10px;
+        }
+
+        .comment-form textarea {
+            padding: 10px;
+        }
+
+        .comment-form button {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .comment-actions .action-item {
+            font-size: 16px;
+        }
+    }
+    .nocomment {
+        color: black;
+    }
+</style>
+
+<div class="comment-section">
+    {% if not article.comments.all %}
+    <h3 class="nocomment">No comments yet..</h3>
+    {% else %}
+    {% for comment in article.comments.all %}
+    <div class="comment">
+        <div class="comment-content">
+            <img src="{{ comment.name.avatar.url }}" alt="{{ comment.name.username }}" class="avatar1">
+            <div class="comment-details">
+                <strong class="username">{{ comment.name.username }}</strong>
+                <p class="body">{{ comment.body }}</p>
+            </div>
+        </div>
+        <div class="comment-actions">
+            <div class="action-item">
+                <i class="fas fa-reply"></i><span>Reply</span>
+            </div>
+            <br/>
+            <div class="action-item">
+                <i class="fas fa-trash"></i><span>Delete</span>
+            </div>
+        </div>
+    </div>
+    
+    {% endfor %}
+    {% endif %}
+</div>
+
+<div class="comment-form">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ commentform.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
