@@ -1,4 +1,5 @@
 {% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
     .comment-section {
         background-color: #f9f9f9;
@@ -41,7 +42,11 @@
         font-weight: bold;
     }
 
-   
+    .comment-date {
+        font-size: 12px;
+        color: #888;
+        margin-top: 5px;
+    }
 
     .comment-actions {
         display: flex;
@@ -122,18 +127,24 @@
     .nocomment {
         color: black;
     }
+    /* Adjusted CSS */
+.nested-replies-container {
+    margin-left: 20px; /* Adjust as needed */
+    padding-left: 20px; /* Adjust as needed */
+    border-left: 2px solid #ccc; /* Adjust as needed */
+}
 </style>
-
 <div class="comment-section">
     {% if not article.comments.all %}
     <h3 class="nocomment">No comments yet..</h3>
     {% else %}
-    {% for comment in article.comments.all %}
+    {% for comment in article.comments.all  %}
     <div class="comment">
         <div class="comment-content">
             <img src="{{ comment.name.avatar.url }}" alt="{{ comment.name.username }}" class="avatar1">
             <div class="comment-details">
                 <strong class="username">{{ comment.name.username }}</strong>
+                <span class="comment-date">{{comment.date_added}}</span>
                 <p class="body">{{ comment.body }}</p>
             </div>
         </div>
@@ -142,12 +153,47 @@
                 <i class="fas fa-reply"></i><span>Reply</span>
             </div>
             <br/>
-            <div class="action-item">
-                <i class="fas fa-trash"></i><span>Delete</span>
-            </div>
+            {% if request.user.is_authenticated %}
+                {% if comment.name == request.user %}
+                    <div class="action-item">
+                        <i class="fas fa-trash"></i><span>Delete</span>
+                    </div>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
-    
+
+    <!-- Nested Replies Container -->
+    <div class="nested-replies-container">
+        {% if comment.replies.all %}
+        {% for reply in comment.replies.all %}
+        <div class="comment">
+            <div class="comment-content">
+                <img src="{{ reply.name.avatar.url }}" alt="{{ reply.name.username }}" class="avatar1">
+                <div class="comment-details">
+                    <strong class="username">{{ reply.name.username }}</strong>
+                    <span class="comment-date">{{reply.date_added}}</span>
+                    <p class="body">{{ reply.reply_body }}</p>
+                </div>
+            </div>
+            <div class="comment-actions">
+                <div class="action-item">
+                    <i class="fas fa-reply"></i><span>Reply</span>
+                </div>
+                <br/>
+                <br/>
+                {% if request.user.is_authenticated %}
+                    {% if reply.name == request.user %}
+                        <div class="action-item">
+                            <i class="fas fa-trash"></i><span>Delete</span>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
     {% endfor %}
     {% endif %}
 </div>

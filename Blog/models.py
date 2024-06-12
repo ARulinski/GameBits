@@ -69,7 +69,7 @@ class Reply(models.Model):
     comment_name = models.ForeignKey(Comment, on_delete= models.CASCADE, related_name='replies')
     name = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to= {'status': 'regular', 'status': 'moderator'}, related_name= 'replies' )
     reply_body = models.TextField(max_length=500)
-    date_added = models.DateField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "by" + " " + str(self.name) + " |  " + "to" + " " + str(self.comment_name.name) + ' : ' + str(self.comment_name.article.title)

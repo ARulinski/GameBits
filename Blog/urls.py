@@ -13,6 +13,8 @@ urlpatterns = [
     path('reviews', views.reviews, name='reviews'),
     path('add_article/', add_article.as_view(), name='add_article'),
     path('upload_image/', upload_image, name='upload_image'),
+    
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

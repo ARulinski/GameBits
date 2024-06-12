@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Reply
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -20,4 +20,13 @@ class CommentForm(forms.ModelForm):
         labels = {
             'body': ''
         }
-     
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['reply_body']  # Assuming 'reply_body' is the field name in your Reply model
+        widgets = {
+            'reply_body': forms.Textarea(attrs={'placeholder': 'Write your reply here...'}),
+        }
+        labels = {
+            'reply_body': ''
+        }
