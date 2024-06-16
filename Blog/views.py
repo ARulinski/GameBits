@@ -62,15 +62,21 @@ class article_view(DetailView, FormView):
     
     def form2_valid(self, form):
         reply = form.save(commit=False)
-        reply.comment = get_object_or_404(Comment, pk=self.request.POST.get('comment_id'))
+        parent_comment_id = self.request.POST.get('comment_id')
+        parent_reply_id = self.request.POST.get('reply_id')
+
+        if parent_comment_id:
+            reply.comment = get_object_or_404(Comment, pk=parent_comment_id)
+        elif parent_reply_id:
+            parent_reply = get_object_or_404(Reply, pk=parent_reply_id)
+            reply.comment = parent_reply.comment  # Associate reply with the same comment as the parent reply
+
         reply.name = self.request.user
         reply.save()
         return HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self):
         return reverse_lazy('article_view', kwargs={'pk': self.object.pk})
-
-
    
 class add_article(CreateView):
     model = Article
