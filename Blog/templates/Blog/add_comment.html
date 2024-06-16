@@ -169,7 +169,7 @@
             <div class="comment-details">
                 <strong class="username">{{ comment.name.username }}</strong>
                 <span class="comment-date">{{ comment.date_added }}</span>
-                <p class="body">{{ comment.body }}</p>
+                <p class="body">{{ comment.comment_body }}</p>
             </div>
         </div>
         <div class="comment-actions">
@@ -223,7 +223,7 @@
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="input-container">
-        {{ commentform.as_p }}
+        {{  form.as_p }}
         <button type="submit" class="submit-btn">Post</button>
       </div>
     </form>

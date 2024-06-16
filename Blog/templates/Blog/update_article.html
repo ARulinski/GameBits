@@ -1,0 +1,106 @@
+{% extends 'Blog/layout.html' %}
+
+{% block head %}
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <style>
+        /* Add custom styles */
+        body {
+            color: #ccc;
+            background-color: #000;
+            font-family: 'Roboto', sans-serif;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+        }
+        hr {
+            max-width: 350px;
+            margin: 20px auto;
+            border-color: #777;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #444;
+            color: #ccc;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .submit-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e6e5e4;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+        .submit-btn:hover {
+            background-color: #ff1493;
+        }
+        .Button-delete {
+            margin-left: 590px;
+            display: inline-block;
+            padding: 7px 15px;
+            font-size: 14px;
+            background-color: #ea0707;
+            color: azure;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .Button-delete:hover{
+            color: rgb(234, 0, 0);
+            background-color: aliceblue;
+          
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Update Article</h1>
+    <hr>
+
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+            <button type="submit" class="submit-btn">Post</button>
+            <a href="{% url 'delete_article' article.id %}" class ="Button-delete">delete</a>
+
+        </form>
+    </div>
+   
+    
+{% endblock %}

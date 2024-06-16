@@ -1,0 +1,58 @@
+{% extends 'Blog/layout.html' %}
+
+{% block body %}
+<style>
+    .delete-article-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Full height of the viewport */
+       
+    }
+
+    .delete-article-confirmation {
+    
+        padding: 20px;
+        border-radius: 8px;
+     
+        text-align: center;
+    }
+
+    .button-delete {
+        background-color: #e90c22;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .button-cancel {
+        background-color: #1bdb25;
+        color: white;
+        border: none;
+        font-size: 13px;
+        padding: 11px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .button-delete:hover,
+    .button-cancel:hover {
+        opacity: 0.8;
+   
+    }
+</style>
+<div class="delete-article-container">
+    <div class="delete-article-confirmation">
+        <h1>Are you sure you want to delete this article?</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="button-delete">Yes, delete</button>
+            <a href="{% url 'article_view' object.id %}" class="button-cancel">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

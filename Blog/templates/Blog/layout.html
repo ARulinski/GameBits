@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    
     <script src="{% static 'js/script.js' %}"></script>
+
  
     <title>Gaming Blog</title>
 
@@ -342,14 +344,15 @@
     <i class="fa-regular fa-bell"></i>
       <span>Notifications</span>
   </a>
+  <a href="#" class="bloc-icon" onclick="toggleSearch()">
+    <i class="fas fa-search"></i>
+    <span>Search</span>
+</a>
   <a href="#" class="bloc-icon" onclick="changeColor(this)">
-      <i class="fas fa-user"></i>
+    <img src="{{ user.avatar.url }}" alt="Profile" class="avatar"></i>
       <span>Profile</span>
   </a>
-  <a href="#" class="bloc-icon" onclick="toggleSearch()">
-      <i class="fas fa-search"></i>
-      <span>Search</span>
-  </a>
+ 
 </nav>
 
 {% block body %}
