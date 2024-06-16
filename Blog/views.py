@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 from .models import Article, Comment, Reply
 from .forms import CommentForm, ReplyForm
 from django.views.generic import FormView
-
+from django.forms import inlineformset_factory
 
 # Create your views here.   
 def home(request):
@@ -31,56 +31,45 @@ class article_view(DetailView, FormView):
     form_class = CommentForm
     second_form_class = ReplyForm
 
-    def get_context_data(self, **kwargs): 
-        context = super(article_view,self).get_context_data(**kwargs)
-        if 'form' not in context:
-            context['form'] = self.form_class()
-        if 'form2' not in context:
-            context['form2'] = self.second_form_class()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class()
+        context['form2'] = self.second_form_class()
+        context['comments'] = self.get_comments()
         return context
     
+    def get_comments(self):
+        return Comment.objects.filter(article=self.get_object())
+
     def post(self, request, *args, **kwargs):
-        self.obejct = self.get_object
-        if 'form' in request.POST:
-            form_class = self.form_class
-            form_name = 'form'
-        else:
-            form_class = self.second_form_class
-            form_name = 'form2'
-
-        form = self.get_form(form_class)
-
-        if form_name == 'form' and form.is_valid():
-            print('returned comment ')
-            return self.form_valid(form)
-        elif form_name == 'form2' and form.is_valid():
-            print("returned reply")
-            return self.form2.valid(form)
-    
-    def get_success_url(self):
         self.object = self.get_object()
-        article = self.object.article
-        title = self.object.title
-        return reverse_lazy("article_view", kwargs ={
-            'article': article.slug,
-            'title' : title.slug })
-    
+        if 'comment_form' in request.POST:
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                return self.form_valid(form)
+        elif 'reply_form' in request.POST:
+            form2 = self.second_form_class(request.POST)
+            if form2.is_valid():
+                return self.form2_valid(form2)
+        return self.form_invalid(form)
+
     def form_valid(self, form):
-        self.obejct = self.get_object()
-        fm = form.save(commit=False)
-        fm.author = self.request.user
-        fm.article_name = self.object.comments.name
-        fm.article_name_id = self.obejct.id
-        fm.save()
+        comment = form.save(commit=False)
+        comment.article = self.object
+        comment.name = self.request.user
+        comment.save()
         return HttpResponseRedirect(self.get_success_url())
     
     def form2_valid(self, form):
-        self.object = self.get_object()
-        fm = form.save(commit=False)
-        fm.name = self.request.user
-        fm.comment_name_id = self.request.POST.get('comment.id')
-        fm.save()
+        reply = form.save(commit=False)
+        reply.comment = get_object_or_404(Comment, pk=self.request.POST.get('comment_id'))
+        reply.name = self.request.user
+        reply.save()
         return HttpResponseRedirect(self.get_success_url())
+    
+    def get_success_url(self):
+        return reverse_lazy('article_view', kwargs={'pk': self.object.pk})
+
 
    
 class add_article(CreateView):

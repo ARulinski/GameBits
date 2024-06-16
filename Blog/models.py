@@ -75,3 +75,12 @@ class Reply(models.Model):
     reply_body = models.TextField()
     name = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_added']
+    
+    def __str__(self):
+        try:
+            return str(self.name) + 'reply' + str(self.reply_body)
+        except:
+            return f'Anonymus : {self.reply_body}'

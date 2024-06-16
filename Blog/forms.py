@@ -13,23 +13,11 @@ class CustomUserCreationForm(UserCreationForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        
-        fields = ['comment_body']
-        
-        labels = {
-            'body': (''),
-        }
-        
-        widgets = {
-            'body' : forms.TextInput(),
-        }
+        fields = ["comment_body"]
+       
 
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply
-        
         fields = ['reply_body']
-    
-        widgets = {
-            'body' : forms.TextInput(),
-        }      
+
