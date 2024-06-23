@@ -8,21 +8,24 @@
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    padding-top: 60px;
+    padding-top: 67px;
+
+
   }
 
-  /* Adjust padding-top for larger screens */
-  @media only screen and (min-width: 1200px) {
-    body {
-      padding-top: 66px; /* Adjusted value for larger screens */
-    }
+/* Adjust padding-top for larger screens */
+@media only screen and (min-width: 1200px) {
+  body {
+    padding-top: 66px; /* Adjusted value for larger screens */
   }
-  @media only screen and (max-width: 600px) {
-    body {
-      padding-top: 0px; /* Adjusted value for smaller screens */
-      padding-bottom: 60px;
-    }
+}
+@media only screen and (max-width: 600px) {
+  body {
+    padding-top: 0px; /* Adjusted value for smaller screens */
+    padding-bottom: 60px;
   }
+}
+
 
   .grid-container {
     display: grid;
@@ -35,9 +38,8 @@
 
   .left-column {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     grid-gap: 20px;
-    max-width: 600px;
   }
 
   .right-column {
@@ -55,12 +57,13 @@
   }
 
   .article img {
-    width: ;
+    width: 100%;
     height: 270px; /* Set a fixed height for the image */
     object-fit: cover; /* Scale the image while maintaining aspect ratio */
     display: block;
     border-radius: 8px 8px 0 0;
-  }
+    
+}
 
   .tag {
     position: absolute;
@@ -127,7 +130,7 @@
     }
 
     .left-column {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
   }
 
@@ -145,7 +148,6 @@
   .ad-space.side {
     grid-row: span 2;
   }
-  
   a {
     text-decoration: none;
     color: #fff; /* Set link color */
@@ -156,31 +158,58 @@
     text-decoration: underline;
     color: #ff1493; /* Change color on hover */
   }
+  .rating-star {
+    
+    font-size: 16px;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
 
+ 
 <div class="header-news">
-  <h1>Game Bits Top Games</h1>
+  <h1>Game Bits Reviews</h1>
 </div>
+
 
 <div class="ad-space top">
   <!-- Top ad -->
   <p>Top Ad</p>
 </div>
 
+
 <div class="grid-container">
   <div class="left-column">
-    {% for game in object_list|slice:":5" %}
+    {% for article in object_list %}
     <div class="article">
-      <span class="tag">{{ game.genre }}</span>
-      <img src="{{ game.picture.url }}" alt="{{ game.title }}">
+      <span class="tag">{{ article.tag }}</span>
+      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
       <div class="article-content">
-        <h2 class="article-title"><a href="">{{ game.title }}</a></h2>
-        <p class="author-info">By {{ game.genre }} | {{ game.release_date }}</p>
-        <p class="platforms">Developer: 
-          {{ game.developer }}
+        <h2 class="article-title"><a href="{% url 'article_view' pk=article.pk %}">{{ article.title }}</a></h2>
+        <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
+        <div class="rating-star">
+
+          <span title="{{ article.rating }}/5">
+            <!-- First star -->
+            <i class="{% if article.rating >= 1 %}fa-solid fa-star{% elif article.rating >= 0.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Second star -->
+            <i class="{% if article.rating >= 2 %}fa-solid fa-star{% elif article.rating >= 1.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Third star -->
+            <i class="{% if article.rating >= 3 %}fa-solid fa-star{% elif article.rating >= 2.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Fourth star -->
+            <i class="{% if article.rating >= 4 %}fa-solid fa-star{% elif article.rating >= 3.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Fifth star -->
+            <i class="{% if article.rating >= 5 %}fa-solid fa-star{% elif article.rating >= 4.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+        </span>
+        
+        
+          <span><strong>( {{ article.rating }}/5 )</strong></span>
+      </div>
+        <p class="platforms">Platforms: 
+          {% for platform in article.platforms.all %}
+            {{ platform.name }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
         </p>
       </div>
     </div>
@@ -194,7 +223,7 @@
     </div>
     <div class="list-articles">
       <h2 class="section-title">Latest</h2>
-      {% for article in news_articles %}
+      {% for article in object_list %}
       <div>
         <h3>{{ article.title }}</h3>
         <p>{{ article.date_posted }}</p>
@@ -235,5 +264,4 @@
   <!-- Bottom ad -->
   <p>Bottom Ad</p>
 </div>
-
 {% endblock %}

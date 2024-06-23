@@ -6,8 +6,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from .models import Article, Comment, Reply, Game
-from .forms import CommentForm, ReplyForm, ArticleForm, GameForm
+from .models import Article, Comment, Reply
+from .forms import CommentForm, ReplyForm, ArticleForm
 from django.views.generic import FormView
 from django.forms import DateInput, inlineformset_factory
 
@@ -71,23 +71,14 @@ class xbox_view(ListView):
     def get_queryset(self):
         return Article.objects.filter(platforms__name='XBOX')
 
-class add_game(CreateView):
-   model = Game
-   template_name = 'Blog/add_game.html'
-   fields = '__all__'
-  
-   
+class top_games(ListView):
+    model = Article
+    template_name = 'Blog/top_games.html'
+    context_object_name ='rating'
 
-class game_view(ListView):
-    model = Game
-    template_name = 'Blog/game_view.html'
+    def get_queryset(self):
+       return Article.objects.filter(rating__gt=4.0)
 
-class game_detail(DetailView):
-    model = Game 
-    template_name = 'Blog/game_detail.html'
-    
- 
-    
 
 class article_view(DetailView, FormView):
     model = Article

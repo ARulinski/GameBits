@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment,Reply, Article, Game
+from .models import Comment,Reply, Article
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -37,14 +37,6 @@ class ArticleForm(forms.ModelForm):
         if self.instance and self.instance.tag != 'NEWS':
             self.fields['rating'].widget = forms.HiddenInput()
 
-class GameForm(forms.ModelForm):
-    class Meta:
-        model = Game
-        fields = '__all__'
-        widgets = {
-            'release_date': DateInput(),
-        }
-        
 
       
         

@@ -47,7 +47,7 @@ class Article(models.Model):
     picture = models.ImageField(null=True, blank=True, upload_to='media/images')
     content = HTMLField()
     tag = models.CharField(max_length=20, choices=TAGS_CHOICES_DICT.items(), default="NEWS")
-    rating = models.IntegerField(null=True, blank=True, default=None,  help_text='Enter rating from 1 to 5',validators=[MinValueValidator(1), MaxValueValidator(5)]) 
+    rating = models.FloatField(null=True, blank=True, default=None,  help_text='Enter rating from 1 to 5',validators=[MinValueValidator(1), MaxValueValidator(5)]) 
 
     class Meta:
         ordering = ['-date_posted']
@@ -63,23 +63,7 @@ class Article(models.Model):
         if self.tag != "REVIEWS":
             self.rating = None  
         super().save(*args, **kwargs)
-    
-class Game(models.Model):
-    title = models.CharField(max_length=200)
-    release_date = models.DateTimeField()
-    picture = models.ImageField(null=True, blank=True, upload_to='media/images')
-    genre = models.CharField(max_length=300)
-    developer = models.CharField(max_length=300)
 
-    class Meta:
-        ordering = ['release_date']
-       
-
-    def __str__(self):
-        return self.title + ' | ' + str(self.genre)
-    
-    def get_absolute_url(self):
-        return reverse('game_view', args=[str(self.pk)])
 
 class Comment(models.Model):
     article =  models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")

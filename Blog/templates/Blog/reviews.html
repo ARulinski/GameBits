@@ -158,6 +158,10 @@
     text-decoration: underline;
     color: #ff1493; /* Change color on hover */
   }
+  .rating-star {
+    
+    font-size: 16px;
+  }
 </style>
 {% endblock %}
 
@@ -184,6 +188,24 @@
       <div class="article-content">
         <h2 class="article-title"><a href="{% url 'article_view' pk=article.pk %}">{{ article.title }}</a></h2>
         <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
+        <div class="rating-star">
+
+          <span title="{{ article.rating }}/5">
+            <!-- First star -->
+            <i class="{% if article.rating >= 1 %}fa-solid fa-star{% elif article.rating >= 0.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Second star -->
+            <i class="{% if article.rating >= 2 %}fa-solid fa-star{% elif article.rating >= 1.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Third star -->
+            <i class="{% if article.rating >= 3 %}fa-solid fa-star{% elif article.rating >= 2.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Fourth star -->
+            <i class="{% if article.rating >= 4 %}fa-solid fa-star{% elif article.rating >= 3.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+            <!-- Fifth star -->
+            <i class="{% if article.rating >= 5 %}fa-solid fa-star{% elif article.rating >= 4.5 %}fa-regular fa-star-half-stroke{% else %}fa-regular fa-star{% endif %}" aria-hidden="true"></i>
+        </span>
+        
+        
+          <span><strong>( {{ article.rating }}/5 )</strong></span>
+      </div>
         <p class="platforms">Platforms: 
           {% for platform in article.platforms.all %}
             {{ platform.name }}{% if not forloop.last %}, {% endif %}
@@ -201,7 +223,7 @@
     </div>
     <div class="list-articles">
       <h2 class="section-title">Latest</h2>
-      {% for article in news_articles %}
+      {% for article in object_list %}
       <div>
         <h3>{{ article.title }}</h3>
         <p>{{ article.date_posted }}</p>
