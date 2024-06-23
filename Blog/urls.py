@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import news, article_view, add_article, update_article, delete_article, reviews, guides, pc_view,playstation_view, nintendo_view, xbox_view, top_games
+from .views import news, article_view, add_article, update_article, delete_article, reviews, guides, pc_view,playstation_view, nintendo_view, xbox_view, top_games,article_links
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import upload_image
@@ -20,6 +20,7 @@ urlpatterns = [
     path('nintendo_view', nintendo_view.as_view(), name='nintendo_view'),
     path('upload_image/', upload_image, name='upload_image'),
     path('top_games/', top_games.as_view(), name='top_games'),
+    path('article_links/', article_links.as_view(), name='article_links'),
 
 
     

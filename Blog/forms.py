@@ -38,5 +38,6 @@ class ArticleForm(forms.ModelForm):
             self.fields['rating'].widget = forms.HiddenInput()
 
 
+
       
         

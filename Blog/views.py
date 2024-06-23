@@ -79,6 +79,11 @@ class top_games(ListView):
     def get_queryset(self):
        return Article.objects.filter(rating__gt=4.0)
 
+class article_links(ListView):
+    model = Article
+    template_name = 'Blog/article_links.html'
+    fields = '__all__'
+
 
 class article_view(DetailView, FormView):
     model = Article

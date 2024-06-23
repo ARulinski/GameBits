@@ -119,15 +119,7 @@
 <div class="grid-container">
   <div class="section">
     <h2>Latest Articles</h2>
-    {% for article in latest_articles %}
-      <div class="article">
-        <img src="{{ article.picture.url }}" alt="{{ article.title }}">
-        <div class="article-content">
-          <h3 class="article-title">{{ article.title }}</h3>
-          <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
-        </div>
-      </div>
-    {% endfor %}
+    {% include "Blog/article_links.html" %}
   </div>
 
   <div class="section">
