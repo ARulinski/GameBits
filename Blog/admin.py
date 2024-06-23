@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Author, Platform, Comment, Reply
+from .models import Article, Author, Platform, Comment, Reply, Game
 
 # Register your models here.
 
@@ -14,3 +14,4 @@ admin.site.register(Author)
 admin.site.register(Platform)
 admin.site.register(Comment)
 admin.site.register(Reply)
+admin.site.register(Game)

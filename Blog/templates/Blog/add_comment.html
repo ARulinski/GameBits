@@ -1,5 +1,4 @@
 {% load static %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
     .comment-section {
         background-color: #2b2b2b;
@@ -185,7 +184,7 @@
                                 <img src="{{ reply.name.avatar.url }}" alt="{{ reply.name.username }}" class="avatar1">
                                 <div class="reply-details">
                                     <strong class="username">{{ reply.name.username }}</strong>
-                                    <span class="comment-date">{{ reply.date_added }}</span>
+                                    <span class="comment-date">{{ reply.date_added }} <br/>replided to: {{reply.comment}}</span>
                                     <p class="body">{{ reply.reply_body }}</p>
                                 </div>
                             </div>
@@ -229,6 +228,7 @@
     </form>
 </div>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.reply-btn').forEach(function (button) {
@@ -261,5 +261,10 @@
             });
         });
     });
+    $(function() {
+            $("#date_posted").datepicker({
+                dateFormat: 'yy-mm-dd'  // This should match the format expected by your DateField
+            });
+        });
 </script>
 

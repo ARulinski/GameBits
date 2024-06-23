@@ -67,7 +67,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Add Article</h1>
+    <h1>Add Game</h1>
     <hr>
 
     <div class="form-container">
@@ -78,23 +78,6 @@
             <button type="submit" class="submit-btn">Post</button>
         </form>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        const tagField = document.getElementById("id_tag");
-        const ratingField = document.getElementById("id_rating").parentElement;
-
-        function toggleRatingField() {
-            if (tagField.value === 'REVIEWS') {
-                ratingField.style.display = 'block';
-            } else {
-                ratingField.style.display = 'none';
-            }
-        }
-
-        tagField.addEventListener("change", toggleRatingField);
-        toggleRatingField();  // Initial call to set the correct state on page load
-    });
-  
-    </script>
+   
     
 {% endblock %}

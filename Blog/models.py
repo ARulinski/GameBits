@@ -1,7 +1,10 @@
 import uuid
 from django.db import models
+from django.forms import DateInput
 from users.models import AbstractUser, CustomUser
 from django.urls import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 from tinymce.models import HTMLField
 
@@ -19,9 +22,9 @@ TAGS_CHOICES_DICT = {
     "NEWS": "NEWS",
     "LATEST": "LATEST",
     "REVIEWS": "REVIEWS",
-    "RATING": "RATING",
     "GUIDE": "GUIDE",
 }
+
 
 class Platform(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -44,15 +47,39 @@ class Article(models.Model):
     picture = models.ImageField(null=True, blank=True, upload_to='media/images')
     content = HTMLField()
     tag = models.CharField(max_length=20, choices=TAGS_CHOICES_DICT.items(), default="NEWS")
+    rating = models.IntegerField(null=True, blank=True, default=None,  help_text='Enter rating from 1 to 5',validators=[MinValueValidator(1), MaxValueValidator(5)]) 
 
     class Meta:
         ordering = ['-date_posted']
+       
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
     
     def get_absolute_url(self):
         return reverse('article_view', args=[str(self.pk)])
+    
+    def save(self, *args, **kwargs):
+        if self.tag != "REVIEWS":
+            self.rating = None  
+        super().save(*args, **kwargs)
+    
+class Game(models.Model):
+    title = models.CharField(max_length=200)
+    release_date = models.DateTimeField()
+    picture = models.ImageField(null=True, blank=True, upload_to='media/images')
+    genre = models.CharField(max_length=300)
+    developer = models.CharField(max_length=300)
+
+    class Meta:
+        ordering = ['release_date']
+       
+
+    def __str__(self):
+        return self.title + ' | ' + str(self.genre)
+    
+    def get_absolute_url(self):
+        return reverse('game_view', args=[str(self.pk)])
 
 class Comment(models.Model):
     article =  models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")
@@ -84,3 +111,4 @@ class Reply(models.Model):
             return str(self.name) + 'reply' + str(self.reply_body)
         except:
             return f'Anonymus : {self.reply_body}'
+

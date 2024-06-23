@@ -8,24 +8,21 @@
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    padding-top: 67px;
-
-
+    padding-top: 60px;
   }
 
-/* Adjust padding-top for larger screens */
-@media only screen and (min-width: 1200px) {
-  body {
-    padding-top: 66px; /* Adjusted value for larger screens */
+  /* Adjust padding-top for larger screens */
+  @media only screen and (min-width: 1200px) {
+    body {
+      padding-top: 66px; /* Adjusted value for larger screens */
+    }
   }
-}
-@media only screen and (max-width: 600px) {
-  body {
-    padding-top: 0px; /* Adjusted value for smaller screens */
-    padding-bottom: 60px;
+  @media only screen and (max-width: 600px) {
+    body {
+      padding-top: 0px; /* Adjusted value for smaller screens */
+      padding-bottom: 60px;
+    }
   }
-}
-
 
   .grid-container {
     display: grid;
@@ -38,8 +35,9 @@
 
   .left-column {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 20px;
+    max-width: 600px;
   }
 
   .right-column {
@@ -57,13 +55,12 @@
   }
 
   .article img {
-    width: 100%;
+    width: ;
     height: 270px; /* Set a fixed height for the image */
     object-fit: cover; /* Scale the image while maintaining aspect ratio */
     display: block;
     border-radius: 8px 8px 0 0;
-    
-}
+  }
 
   .tag {
     position: absolute;
@@ -130,7 +127,7 @@
     }
 
     .left-column {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
   }
 
@@ -148,6 +145,7 @@
   .ad-space.side {
     grid-row: span 2;
   }
+  
   a {
     text-decoration: none;
     color: #fff; /* Set link color */
@@ -163,31 +161,26 @@
 
 {% block body %}
 
- 
 <div class="header-news">
-  <h1>Game Bits Reviews</h1>
+  <h1>Game Bits Top Games</h1>
 </div>
-
 
 <div class="ad-space top">
   <!-- Top ad -->
   <p>Top Ad</p>
 </div>
 
-
 <div class="grid-container">
   <div class="left-column">
-    {% for article in object_list %}
+    {% for game in object_list|slice:":5" %}
     <div class="article">
-      <span class="tag">{{ article.tag }}</span>
-      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+      <span class="tag">{{ game.genre }}</span>
+      <img src="{{ game.picture.url }}" alt="{{ game.title }}">
       <div class="article-content">
-        <h2 class="article-title"><a href="{% url 'article_view' pk=article.pk %}">{{ article.title }}</a></h2>
-        <p class="author-info">By {{ article.author }} | {{ article.date_posted }}</p>
-        <p class="platforms">Platforms: 
-          {% for platform in article.platforms.all %}
-            {{ platform.name }}{% if not forloop.last %}, {% endif %}
-          {% endfor %}
+        <h2 class="article-title"><a href="">{{ game.title }}</a></h2>
+        <p class="author-info">By {{ game.genre }} | {{ game.release_date }}</p>
+        <p class="platforms">Developer: 
+          {{ game.developer }}
         </p>
       </div>
     </div>
@@ -242,4 +235,5 @@
   <!-- Bottom ad -->
   <p>Bottom Ad</p>
 </div>
+
 {% endblock %}

@@ -14,7 +14,7 @@
   /* Adjust padding-top for larger screens */
 @media only screen and (min-width: 1200px) {
   body {
-    padding-top: 67px; /* Adjusted value for larger screens */
+    padding-top: 66px; /* Adjusted value for larger screens */
   }
 }
 @media only screen and (max-width: 600px) {
@@ -23,17 +23,6 @@
   }
 }
 
-  .header-news {
-    background: grey;
-    padding: 40px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .header-news h1 {
-    font-size: 28px;
-    margin: 0;
-  }
 
   .grid-container {
     display: grid;
@@ -155,7 +144,7 @@
   </div>
 
   <div class="section">
-    <h2>Guides</h2>
+    <h2>Top Guides</h2>
     {% for guide in guides %}
       <div class="guide">
         <img src="{{ guide.picture.url }}" alt="{{ guide.title }}">

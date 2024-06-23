@@ -16,7 +16,7 @@
 /* Adjust padding-top for larger screens */
 @media only screen and (min-width: 1200px) {
   body {
-    padding-top: 60px; /* Adjusted value for larger screens */
+    padding-top: 66px; /* Adjusted value for larger screens */
   }
 }
 @media only screen and (max-width: 600px) {
@@ -26,17 +26,6 @@
   }
 }
 
-  .header-news {
-    background-color: #333;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .header-news h1 {
-    font-size: 28px;
-    margin: 0;
-  }
 
   .grid-container {
     display: grid;
@@ -73,6 +62,7 @@
     object-fit: cover; /* Scale the image while maintaining aspect ratio */
     display: block;
     border-radius: 8px 8px 0 0;
+  
 }
 
   .tag {
@@ -184,7 +174,6 @@
   <p>Top Ad</p>
 </div>
 
-
 <div class="grid-container">
   <div class="left-column">
     {% for article in object_list %}
@@ -252,4 +241,5 @@
   <!-- Bottom ad -->
   <p>Bottom Ad</p>
 </div>
+
 {% endblock %}

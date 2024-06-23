@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -5,25 +6,88 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from .models import Article, Comment, Reply
-from .forms import CommentForm, ReplyForm
+from .models import Article, Comment, Reply, Game
+from .forms import CommentForm, ReplyForm, ArticleForm, GameForm
 from django.views.generic import FormView
-from django.forms import inlineformset_factory
+from django.forms import DateInput, inlineformset_factory
 
 # Create your views here.   
 def home(request):
     return render(request, "Blog/home.html")
 
-def reviews(request):
-    return render(request, "Blog/reviews.html")
-
-class latest(ListView):
-    model = Article 
-    template_name = 'Blog/latest.html'
-
 class news(ListView):
     model = Article 
     template_name = 'Blog/news.html'
+    context_object_name = 'news'
+
+    def get_queryset(self):
+        return Article.objects.filter(tag='NEWS')
+    
+class reviews(ListView):
+    model = Article
+    template_name = 'Blog/reviews.html'
+    context_object_name = 'reviews'
+
+    def get_queryset(self):
+        return Article.objects.filter(tag='REVIEWS')
+    
+class guides(ListView):
+    model = Article
+    template_name = 'Blog/guides.html'
+    context_object_name = 'guides'
+
+    def get_queryset(self):
+        return Article.objects.filter(tag='GUIDE')
+    
+class pc_view(ListView):
+    model = Article
+    template_name = 'Blog/pc_view.html'
+    context_object_name = 'pc'
+
+    def get_queryset(self):
+        return Article.objects.filter(platforms__name='PC')
+    
+class playstation_view(ListView):
+    model = Article
+    template_name = 'Blog/playstation_view.html'
+    context_object_name ='playstaion'
+
+    def get_queryset(self):
+        return Article.objects.filter(platforms__name='PLAYSTATION')
+
+class nintendo_view(ListView):
+    model = Article
+    template_name = 'Blog/nintendo_view.html'
+    context_object_name ='nintendo'
+
+    def get_queryset(self):
+        return Article.objects.filter(platforms__name='NINTENDO')
+    
+class xbox_view(ListView):
+    model = Article
+    template_name = 'Blog/xbox_view.html'
+    context_object_name ='xbox'
+
+    def get_queryset(self):
+        return Article.objects.filter(platforms__name='XBOX')
+
+class add_game(CreateView):
+   model = Game
+   template_name = 'Blog/add_game.html'
+   fields = '__all__'
+  
+   
+
+class game_view(ListView):
+    model = Game
+    template_name = 'Blog/game_view.html'
+
+class game_detail(DetailView):
+    model = Game 
+    template_name = 'Blog/game_detail.html'
+    
+ 
+    
 
 class article_view(DetailView, FormView):
     model = Article
@@ -69,7 +133,8 @@ class article_view(DetailView, FormView):
             reply.comment = get_object_or_404(Comment, pk=parent_comment_id)
         elif parent_reply_id:
             parent_reply = get_object_or_404(Reply, pk=parent_reply_id)
-            reply.comment = parent_reply.comment  # Associate reply with the same comment as the parent reply
+            reply.comment = parent_reply.comment  
+            
 
         reply.name = self.request.user
         reply.save()
@@ -81,12 +146,13 @@ class article_view(DetailView, FormView):
 class add_article(CreateView):
     model = Article
     template_name = 'Blog/add_article.html'
-    fields = '__all__'
- 
+    form_class = ArticleForm
+    
 class update_article(UpdateView):
     model = Article
     template_name = 'Blog/update_article.html'
     fields = '__all__'
+   
 
 class delete_article(DeleteView):
     model = Article
