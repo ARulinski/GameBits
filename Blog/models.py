@@ -25,6 +25,8 @@ TAGS_CHOICES_DICT = {
     "GUIDE": "GUIDE",
 }
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, null=True, on_delete=models.CASCADE)
 
 class Platform(models.Model):
     name = models.CharField(max_length=50, unique=True)

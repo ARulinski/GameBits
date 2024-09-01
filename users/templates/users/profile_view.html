@@ -1,0 +1,91 @@
+{% extends "Blog/layout.html" %}
+
+{% block head %}
+<style>
+  .profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 12px;
+    color: #e0e0e0;
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .profile-header img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+
+  .profile-header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .profile-info {
+    margin-bottom: 20px;
+  }
+
+  .profile-info p {
+    margin: 10px 0;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .form-group textarea {
+    width: 100%;
+  }
+
+  .form-group input[type="submit"] {
+    background-color: #ff1493;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-group input[type="submit"]:hover {
+    background-color: #e01b6a;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="profile-container">
+  <div class="profile-header">
+    <img src="{{ user.avatar.url }}" alt="{{ user.username }}">
+    <h1>{{ user.username }}</h1>
+  </div>
+
+  <div class="profile-info">
+   
+    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Status:</strong> {{ user.get_status_display }}</p>
+    <p><strong>Description:</strong> {{ user.info }}</p>
+
+  </div>
+  <a href="{% url 'update_profile' %}">
+    <button class="submit-btn">Update Profile</button>
+</a>
+</div>
+{% endblock %}

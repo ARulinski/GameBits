@@ -1,0 +1,129 @@
+{% extends "Blog/layout.html" %}
+
+{% block head %}
+<style>
+    .results-header {
+        text-align: center;
+        margin: 40px 0;
+        color: #00FFFF; /* Electric blue */
+    }
+
+    .search-bar {
+        margin: 30px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-input {
+        width: 320px;
+        padding: 12px;
+        border: 1px solid #444;
+        border-radius: 5px 0 0 5px;
+        background-color: #111;
+        color: #fff;
+        font-size: 16px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+
+    .search-input:focus {
+        background-color: #222;
+        border-color: #00FFFF;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        outline: none;
+    }
+
+    .search-button {
+        padding: 12px 20px;
+        border: 1px solid #444;
+        border-left: none;
+        border-radius: 0 5px 5px 0;
+        background-color: #ff00dd;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        font-size: 16px;
+    }
+
+    .search-button:hover {
+        background-color: #BF00FF;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+
+    .article-card {
+        background-color: #111;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    }
+
+    .article-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        border: 1px solid #FF007F;
+    }
+
+    .article-card img {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .article-card h3 {
+        font-size: 18px;
+        color: #FF007F;
+        margin-bottom: 10px;
+        transition: color 0.3s ease;
+    }
+
+    .article-card:hover h3 {
+        color: #00FFFF;
+    }
+
+    .article-card p {
+        font-size: 15px;
+        color: #ccc;
+        transition: color 0.3s ease;
+    }
+
+    .article-card:hover p {
+        color: #fff;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="results-header">
+    <h2>Search Results</h2>
+</div>
+
+<!-- Search Bar -->
+<div class="search-bar">
+    <form method="GET" action="{% url 'search_results' %}">
+        <input type="text" name="q" value="{{ request.GET.q }}" class="search-input" placeholder="Search articles, reviews, guides..." required>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+
+<div class="content-section">
+    <div class="grid-container">
+        {% for article in object_list %}
+        <div class="article-card">
+            <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+            <h3><a href="{% url 'article_view' pk=article.pk %}">{{ article.title }}</a></h3>
+            <p>{{ article.summary }}</p>
+        </div>
+        {% empty %}
+        <p>No articles found matching your search criteria.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

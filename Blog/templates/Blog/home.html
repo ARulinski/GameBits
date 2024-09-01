@@ -2,163 +2,368 @@
 
 {% block head %}
 <style>
-  body {
-    color: #fff;
-    background-color: #1e1e1e;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    padding-bottom: 60px;
-    padding-top: 67px;
-  }
-  /* Adjust padding-top for larger screens */
-@media only screen and (min-width: 1200px) {
-  body {
-    padding-top: 66px; /* Adjusted value for larger screens */
-  }
-}
-@media only screen and (max-width: 600px) {
-  body {
-    padding-top: 0px; /* Adjusted value for smaller screens */
-  }
+/* General Body Styles */
+body {
+  color: #e0e0e0;
+  background-color: #000000; /* Deep black background for high contrast */
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 80px; /* Adjusted for better footer spacing */
+  padding-top: 70px;
+  font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
 }
 
+a {
+  text-decoration: none;
+  color: #ff1493; /* Neon pink link color */
+}
 
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+a:hover {
+  color: #ff1493; /* Neon pink on hover */
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  height: 500px; /* Height for impact */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('hero-background.jpg') no-repeat center center;
+  background-size: cover;
+  border-bottom: 4px solid #FF007F; /* Neon pink border */
+}
+
+.hero-text {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+  font-size: 4rem; /* Slightly smaller for balance */
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 2px;
+  animation: glitch 50s infinite;
+}
+
+@keyframes glitch {
+  0%, 100% {
+    transform: translate(0, 0);
+    color: #fff;
+    text-shadow:
+      0 0 5px #FF007F,
+      0 0 10px #FF007F,
+      0 0 15px #FF007F,
+      0 0 20px #FF007F;
   }
-
-  .section {
-    background-color: #2b2b2b;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate(-5px, 5px);
+    color: #e0e0e0;
   }
-
-  .section h2 {
-    margin-top: 0;
-    font-size: 24px;
-    font-weight: bold;
+  20%, 40%, 60%, 80% {
+    transform: translate(5px, -5px);
     color: #fff;
   }
+}
 
-  .article,
-  .review,
-  .guide {
-    margin-bottom: 20px;
-  }
+/* Search Bar */
+.search-bar {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
 
-  .article img,
-  .review img,
-  .guide img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-  }
+.search-input {
+  width: 320px; /* Adjusted width */
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 5px 0 0 5px;
+  background-color: #111;
+  color: #fff;
+  font-size: 16px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Electric blue glow */
+}
 
-  .article-content,
-  .review-content,
-  .guide-content {
-    padding: 10px 0;
-  }
+.search-input:focus {
+  background-color: #222;
+  border-color: #00FFFF;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); /* Brighter electric blue glow */
+  outline: none;
+}
 
-  .article-title,
-  .review-title,
-  .guide-title {
-    margin-top: 0;
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-  }
+.search-button {
+  padding: 12px 20px;
+  border: 1px solid #444;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  background-color: #ff00dd; /* Neon pink button */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+}
 
-  .author-info,
-  .platforms {
-    font-size: 14px;
-    color: #ccc;
-  }
+.search-button:hover {
+  background-color: #BF00FF; /* Brighter purple on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
 
-  .game {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-  }
+/* Featured Section */
+.featured-section {
+  background-color: #111;
+  padding: 40px 20px;
+  margin: 30px 0;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
 
-  .game img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
+.featured-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255, 0, 127, 0.5), rgba(0, 255, 255, 0.5)); /* Gradient effect */
+  opacity: 0.3;
+  z-index: 1;
+  animation: gradientMove 35s linear infinite;
+}
 
-  .game-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-  }
+@keyframes gradientMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
 
-  .game-company {
-    font-size: 14px;
-    color: #ccc;
-  }
+.featured-article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.featured-article img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.featured-article-content {
+  max-width: 700px;
+  padding: 20px;
+  text-align: center;
+}
+
+.featured-article-content h3 {
+  font-size: 32px;
+  color: #FF007F;
+  margin: 15px 0;
+}
+
+.featured-article-content p {
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.read-more-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #FF007F;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+}
+
+.read-more-button:hover {
+  background-color: #BF00FF;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Content Section */
+.content-section {
+  padding: 30px 20px;
+}
+
+.section-title {
+  font-size: 28px;
+  color: #00FFFF; /* Electric blue */
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #00FF00; /* Lime green underline */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: background 0.3s ease;
+}
+
+.section-title:hover::after {
+  background: #00FFFF; /* Electric blue underline on hover */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Responsive grid layout */
+  gap: 20px;
+}
+
+.article-card {
+  background-color: #111;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.article-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  border: 1px solid #FF007F; /* Neon pink border on hover */
+}
+
+.article-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.article-card h3 {
+  font-size: 18px;
+  color: #FF007F;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.article-card:hover h3 {
+  color: #00FFFF; /* Electric blue on hover */
+}
+
+.article-card p {
+  font-size: 15px;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.article-card:hover p {
+  color: #fff; /* Change text color on hover */
+}
+
+/* Footer */
+.footer {
+  background-color: #111;
+  padding: 20px;
+  text-align: center;
+  color: #ccc;
+  border-top: 1px solid #333;
+}
+
+.footer a {
+  color: #00FFFF; /* Electric blue */
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #FF007F; /* Neon pink on hover */
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.social-icons a {
+  color: #00FFFF; /* Electric blue social icons */
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #FF007F; /* Neon pink on hover */
+}
+
+.header {
+  color: #F3E600;
+  text-align: center;
+  font-size: 25px;
+}
 </style>
 {% endblock %}
 
 {% block body %}
-<div class="header-news">
-  <h1>Game Bits Home</h1>
+
+<div class="header">
+  <h1>Welcome to Game Bits</h1>
 </div>
 
-<div class="grid-container">
-  <div class="section">
-    <h2>Latest Articles</h2>
-    {% include "Blog/article_links.html" %}
-  </div>
-
-  <div class="section">
-    <h2>Top Reviews</h2>
-    {% for review in top_reviews %}
-      <div class="review">
-        <img src="{{ review.picture.url }}" alt="{{ review.title }}">
-        <div class="review-content">
-          <h3 class="review-title">{{ review.title }}</h3>
-          <p class="author-info">By {{ review.author }} | {{ review.date_posted }}</p>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-
-  <div class="section">
-    <h2>Top Guides</h2>
-    {% for guide in guides %}
-      <div class="guide">
-        <img src="{{ guide.picture.url }}" alt="{{ guide.title }}">
-        <div class="guide-content">
-          <h3 class="guide-title">{{ guide.title }}</h3>
-          <p class="author-info">By {{ guide.author }} | {{ guide.date_posted }}</p>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-
-  <div class="section">
-    <h2>Top Games</h2>
-    {% for game in top_games %}
-      <div class="game">
-        <img src="{{ game.picture.url }}" alt="{{ game.title }}">
-        <div class="game-title">{{ game.title }}</div>
-        <div class="game-company">{{ game.company }}</div>
-      </div>
-    {% endfor %}
-  </div>
-
-  <!-- Add more sections for advertisements, social media links, etc. -->
+<!-- Search Bar -->
+<div class="search-bar">
+    <form method="GET" action="{% url 'search_results' %}">
+        <input type="text" name="q" class="search-input" placeholder="Search articles, reviews, guides..." required>
+        <button type="submit" class="search-button">Search</button>
+    </form>
 </div>
+
+<!-- Featured Section -->
+<div class="featured-section">
+  <div class="featured-article">
+    <div class="featured-article-content">
+      <h3>Latest in Gaming: Exciting New Releases This Month!</h3>
+      <p>Discover the most anticipated games launching this month, packed with excitement and adventure.</p>
+      <a href="{% url 'news' %}" class="read-more-button">Read More</a>
+    </div>
+  </div>
+</div>
+
+<!-- Content Sections -->
+<div class="content-section">
+  <!-- Latest News -->
+  <div class="section-title">Latest</div>
+  <div class="grid-container">
+    {% for article in object_list %}
+    <div class="article-card">
+      <img src="{{ article.picture.url }}" alt="{{ article.title }}">
+      <h3 class="article-title"><a href="{% url 'article_view' pk=article.pk %}">{{ article.title }}</a></h3>
+      <p>{{ article.summary }} {{ article.tag }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>&copy; 2024 Game Bits. All rights reserved.</p>
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+  </div>
+  <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+</div>
+
 {% endblock %}

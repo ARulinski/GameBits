@@ -7,13 +7,31 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from .models import Article, Comment, Reply
-from .forms import CommentForm, ReplyForm, ArticleForm
+from .forms import CommentForm, ReplyForm, ArticleForm, ArticleSearchForm
 from django.views.generic import FormView
 from django.forms import DateInput, inlineformset_factory
+from django.db.models import Q
 
 # Create your views here.   
-def home(request):
-    return render(request, "Blog/home.html")
+class HomeView(ListView):
+    model = Article
+    template_name = 'Blog/home.html'  
+    context_object_name = 'object_list'
+    paginate_by = 10  # Optional: add pagination if needed
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('query', None)
+        if query:
+            queryset = queryset.filter(title__icontains=query)  # Filter by title containing the query
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = ArticleSearchForm(self.request.GET or None)  # Pass GET data to form
+        context['form'] = form
+        return context
+
 
 class news(ListView):
     model = Article 
@@ -166,3 +184,12 @@ def upload_image(request):
     file_url = default_storage.url(file_name)
 
     return JsonResponse({'location': file_url})
+
+class SearchResultsView(ListView):
+    model = Article
+    template_name = 'Blog/search_results.html'
+    context_object_name = 'object_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Article.objects.filter(title__icontains=query)

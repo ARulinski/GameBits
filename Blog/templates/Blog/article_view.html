@@ -4,477 +4,440 @@
 <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 <style>
   body {
-    color: #fff;
-    background-color: #1e1e1e;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    padding-top: 60px;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-  }
+  color: #fff;
+  background-color: #1e1e1e;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  padding-top: 60px;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
 
-  @media only screen and (min-width: 1200px) {
-    body {
-      padding-top: 80px;
-    }
+@media only screen and (min-width: 1200px) {
+  body {
+    padding-top: 80px;
   }
+}
 
-  @media only screen and (max-width: 600px) {
-    body {
-      padding-top: 0;
-      padding-bottom: 60px;
-    }
+@media only screen and (max-width: 600px) {
+  body {
+    padding-top: 0;
+    padding-bottom: 60px;
   }
+}
 
+.container {
+  display: grid;
+  grid-template-columns: 1fr; /* Only one column for article */
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "article"
+    "comments"
+    "footer";
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 1100px; /* Width of the content area */
+  margin: 0 auto; /* Center container */
+}
+
+.article-container {
+  background-color: #2b2b2b;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.comments {
+  background-color: #2b2b2b;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 400px; 
+  overflow-y: auto;
+  color: #f1f1f1;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.article-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.article-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.article-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.article-header h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.article-header .subtitle {
+  font-size: 1.2em;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+.article-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.9em;
+  margin-top: 10px;
+  color: #999;
+  flex-wrap: wrap;
+}
+
+.article-meta div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  word-wrap: break-word;
+}
+
+.article-meta .platforms:before,
+.article-meta .author:before,
+.article-meta .date-posted:before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+hr {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
   .container {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: auto 1fr auto;
-    gap: 20px;
-    grid-template-areas: 
-      "article article aside"
-      "comments comments aside"
-      "footer footer footer";
-    padding: 20px;
-    box-sizing: border-box;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  .article-container {
-    grid-area: article;
-    background-color: #2b2b2b;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .aside {
-    grid-area: aside;
-    display: grid;
-    grid-template-rows: repeat(4, auto);
-    gap: 20px;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .aside-box {
-    background-color: #2b2b2b;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .aside-box h3 {
-    margin-top: 0;
-  }
-
-  .comments {
-    grid-area: comments;
-    background-color: #2b2b2b;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  footer {
-    grid-area: footer;
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .article-image {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .article-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  .article-header {
-    text-align: center;
-    margin-bottom: 30px;
+    padding: 10px; /* Reduce padding on mobile */
+    gap: 10px; /* Reduce gap between elements */
   }
 
   .article-header h1 {
-    font-size: 2.5em;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 10px;
-    position: relative;
-    word-wrap: break-word;
+    font-size: 1.8em; /* Adjust font size for mobile */
   }
 
   .article-header .subtitle {
-    font-size: 1.2em;
-    color: #ccc;
-    margin-top: 10px;
+    font-size: 1em; /* Adjust font size for mobile */
   }
 
   .article-meta {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    font-size: 0.9em;
-    margin-top: 10px;
-    color: #999;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .article-meta div {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    word-wrap: break-word;
+  .article-container,
+  .comments {
+    padding: 10px; /* Reduce padding for boxes */
+    overflow: hidden;
   }
-  .article-meta .platforms:before
-  .article-meta .author:before,
-  .article-meta .date-posted:before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background-color: #333;
-    border-radius: 50%;
-  }
+}
 
-  hr {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  /* Mobile Styles */
-  @media (max-width: 768px) {
-    .container {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto auto;
-      grid-template-areas:
-        "article"
-        "comments"
-        "aside"
-        "footer";
-      padding: 10px; /* Reduce padding on mobile */
-      gap: 10px; /* Reduce gap between elements */
-      overflow-x: hidden;
-    }
-
-    .article-header h1 {
-      font-size: 1.8em; /* Adjust font size for mobile */
-    }
-
-    .article-header .subtitle {
-      font-size: 1em; /* Adjust font size for mobile */
-    }
-
-    .article-meta {
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .article-container,
-    .aside-box,
-    .comments {
-      padding: 10px; /* Reduce padding for boxes */
-      overflow: hidden;
-    }
-
-    .aside {
-      grid-template-rows: auto;
-      grid-template-columns: 1fr;
-    }
-  }
 .Button-update {
   background-color: #0954df;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-   justify-self: end; /* Aligns button to end of its grid cell (right side) */
-    text-decoration: none;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  max-width: 200px;
+  margin: 20px auto; /* Center the button horizontally */
 }
+
 .Button-update:hover {
-  background-color:#87e2fb;
+  background-color: #87e2fb;
   color: black;
   text-decoration: none;
 }
-    /* Clearing Floats */
-    .cf:before, .cf:after {
-        content: "";
-        display: table;
-    }
 
-    .cf:after {
-        clear: both;
-    }
+/* Clearing Floats */
+.cf:before, .cf:after {
+  content: "";
+  display: table;
+}
 
-    .cf {
-        zoom: 1;
-    }
+.cf:after {
+  clear: both;
+}
 
-    /* Form wrapper styling */
-    .comment-wrapper {
-        width: 450px;
-        margin: 150px auto 50px auto;
-        border-radius: 40px;
-        background: transparent;
-        box-shadow: 0 4px 20px -2px #e9e9e9;
-        overflow: hidden; /* Ensures child elements don't overflow */
-    }
+.cf {
+  zoom: 1;
+}
 
-    /* Form text input */
-    .comment-wrapper input[type="text"] {
-        padding-left: 20px;
-        width: calc(100% - 120px); /* Adjusted width for input */
-        height: 40px;
-        padding: 10px;
-        float: left;
-        font: bold 13px 'lucida sans', 'trebuchet MS', 'Tahoma';
-        border: 0;
-        background: #fff;
-        border-radius: 40px;
-        border-top-style: none;
-        box-sizing: border-box; /* Ensures padding is included in width */
-    }
+/* Form wrapper styling */
+.comment-wrapper {
+  width: 450px;
+  margin: 150px auto 50px auto;
+  border-radius: 40px;
+  background: transparent;
+  box-shadow: 0 4px 20px -2px #e9e9e9;
+  overflow: hidden; /* Ensures child elements don't overflow */
+}
 
-    .comment-wrapper input[type="text"]:focus {
-        outline: 0;
-        background: #fff;
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
-    }
+/* Form text input */
+.comment-wrapper input[type="text"] {
+  padding-left: 20px;
+  width: calc(100% - 120px); /* Adjusted width for input */
+  height: 40px;
+  padding: 10px;
+  float: left;
+  font: bold 13px 'lucida sans', 'trebuchet MS', 'Tahoma';
+  border: 0;
+  background: #fff;
+  border-radius: 40px;
+  border-top-style: none;
+  box-sizing: border-box; /* Ensures padding is included in width */
+}
 
-    .comment-wrapper input[type="text"]::-webkit-input-placeholder {
-        color: #999;
-        font-weight: normal;
-        font-style: italic;
-        padding-left: 20px;
-    }
+.comment-wrapper input[type="text"]:focus {
+  outline: 0;
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
+}
 
-    .comment-wrapper input[type="text"]:-moz-placeholder {
-        color: #999;
-        font-weight: normal;
-        font-style: italic;
-    }
+.comment-wrapper input[type="text"]::-webkit-input-placeholder {
+  color: #999;
+  font-weight: normal;
+  font-style: italic;
+  padding-left: 20px;
+}
 
-    .comment-wrapper input[type="text"]:-ms-input-placeholder {
-        color: #999;
-        font-weight: normal;
-        font-style: italic;
-        border-style: none;
-    }
+.comment-wrapper input[type="text"]:-moz-placeholder {
+  color: #999;
+  font-weight: normal;
+  font-style: italic;
+}
 
-    /* Form submit button */
-    .comment-wrapper button[type="submit"] {
-        overflow: visible;
-        position: relative;
-        float: right;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        height: 40px;
-        width: 110px;
-        font: 13px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
-        color: #fff;
-        text-transform: uppercase;
-        background: #198cff;
-        border-radius: 40px;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-        box-sizing: border-box; /* Ensures padding is included in width */
-    }
+.comment-wrapper input[type="text"]:-ms-input-placeholder {
+  color: #999;
+  font-weight: normal;
+  font-style: italic;
+  border-style: none;
+}
 
-    .comment-wrapper button[type="submit"]:hover {
-        /* background: #e54040; */
-    }
+/* Form submit button */
+.comment-wrapper button[type="submit"] {
+  overflow: visible;
+  position: relative;
+  float: right;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  height: 40px;
+  width: 110px;
+  font: 13px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+  color: #fff;
+  text-transform: uppercase;
+  background: #198cff;
+  border-radius: 40px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  box-sizing: border-box; /* Ensures padding is included in width */
+}
 
-    .comment-wrapper button[type="submit"]:active,
-    .comment-wrapper button[type="submit"]:focus {
-        background: #198cff;
-        outline: 0;
-    }
+.comment-wrapper button[type="submit"]:hover {
+  /* background: #e54040; */
+}
 
-    .comment-wrapper button[type="submit"]:focus:before,
-    .comment-wrapper button[type="submit"]:active:before {
-        border-right-color: #c42f2f;
-    }
+.comment-wrapper button[type="submit"]:active,
+.comment-wrapper button[type="submit"]:focus {
+  background: #198cff;
+  outline: 0;
+}
 
-    .comment-wrapper button[type="submit"]::-moz-focus-inner {
-        /* remove extra button spacing for Mozilla Firefox */
-        border: 0;
-        padding: 0;
-    }
-    .comment-section {
-        background-color: #2b2b2b;
-        padding: 20px;
-        border-radius: 8px;
-        max-height: 400px; 
-        overflow-y: auto;
-        color: #f1f1f1;
-        font-family: Arial, sans-serif;
-    }
+.comment-wrapper button[type="submit"]:focus:before,
+.comment-wrapper button[type="submit"]:active:before {
+  border-right-color: #c42f2f;
+}
 
-    .comment {
-        background-color: #444;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        display: flex;
-        justify-content: space-between;
-    }
+.comment-wrapper button[type="submit"]::-moz-focus-inner {
+  /* remove extra button spacing for Mozilla Firefox */
+  border: 0;
+  padding: 0;
+}
 
-    .comment .comment-content {
-        display: flex;
-        align-items: flex-start;
-    }
+.comment-section {
+  background-color: #2b2b2b;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 400px; 
+  overflow-y: auto;
+  color: #f1f1f1;
+  font-family: Arial, sans-serif;
+}
 
-    .comment-details {
-        display: flex;
-        flex-direction: column;
-    }
+.comment {
+  background-color: #444;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+}
 
-    .avatar1 {
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        margin-right: 15px;
-        border: 2px solid #3bc8e4;
-    }
+.comment .comment-content {
+  display: flex;
+  align-items: flex-start;
+}
 
-    .username {
-        color: #3bc8e4;
-        font-weight: bold;
-    }
+.comment-details {
+  display: flex;
+  flex-direction: column;
+}
 
-    .comment-date {
-        font-size: 12px;
-        color: #bbb;
-        margin-top: 5px;
-    }
-    .comment-reply {
-        font-size: 16px;
-        color: #cac8c8;
-        margin-top: 5px;
-    }
+.avatar1 {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border: 2px solid #3bc8e4;
+}
 
-    .comment-actions {
-       
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.username {
+  color: #3bc8e4;
+  font-weight: bold;
+}
 
-    .comment-actions .action-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-        cursor: pointer;
-        color: #f1f1f1;
-        font-size: 14px;
-        text-decoration: none;
-    }
+.comment-date {
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 5px;
+}
 
-    .comment-actions .action-item i {
-        margin-right: 5px;
-    }
+.comment-reply {
+  font-size: 16px;
+  color: #cac8c8;
+  margin-top: 5px;
+}
 
-    .comment-actions .action-item:hover {
-        color: #3bc8e4;
-    }
+.comment-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    .comment-form {
-        margin-top: 10px;
-        padding: 20px;
-        background-color: #333;
-        border-radius: 8px;
-    }
+.comment-actions .action-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: #f1f1f1;
+  font-size: 14px;
+  text-decoration: none;
+}
 
-    .comment-form textarea {
-    width: 100%; /* Take up full width of its container */
-    min-height: 50px; /* Minimum height */
-    max-height: 60px; /* Maximum height to allow scrolling if content exceeds */
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #666;
-    background-color: #444;
-    color: #f1f1f1;
-    margin-bottom: 10px;
-    resize: vertical; /* Allow vertical resizing only */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
-    font-size: 16px; /* Example font size; adjust as needed */
-    line-height: 1.5; /* Example line height; adjust as needed */
-    display: grid;
-    grid-template-columns: 1fr auto; /* Creates two columns: one fluid, one auto-sized */
-    gap: 10px; /* Gap between grid items */
+.comment-actions .action-item i {
+  margin-right: 5px;
+}
+
+.comment-actions .action-item:hover {
+  color: #3bc8e4;
+}
+
+.comment-form {
+  margin-top: 10px;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 8px;
+}
+
+.comment-form textarea {
+  width: 100%; /* Take up full width of its container */
+  min-height: 50px; /* Minimum height */
+  max-height: 60px; /* Maximum height to allow scrolling if content exceeds */
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  background-color: #444;
+  color: #f1f1f1;
+  margin-bottom: 10px;
+  resize: vertical; /* Allow vertical resizing only */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-size: 16px; /* Example font size; adjust as needed */
+  line-height: 1.5; /* Example line height; adjust as needed */
+  display: grid;
+  grid-template-columns: 1fr auto; /* Creates two columns: one fluid, one auto-sized */
+  gap: 10px; /* Gap between grid items */
 }
 
 .comment-form button {
-    align-items:center ;
-    background-color: #3bc8e4;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  background-color: #3bc8e4;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-    
-    @media (max-width: 600px) {
-        .comment-section, .comment-form {
-            padding: 10px;
-        }
 
-        .comment {
-            padding: 10px;
-        }
+@media (max-width: 600px) {
+  .comment-section, .comment-form {
+    padding: 10px;
+  }
 
-        .comment-form textarea {
-            padding: 10px;
-        }
+  .comment {
+    padding: 10px;
+  }
 
-        .comment-form button {
-            padding: 10px;
-            font-size: 14px;
-        }
+  .comment-form textarea {
+    padding: 10px;
+  }
 
-        .comment-actions .action-item {
-            font-size: 16px;
-        }
-    }
+  .comment-form button {
+    padding: 10px;
+    font-size: 14px;
+  }
 
-    .nocomment {
-        color: #f1f1f1;
-        text-align: center;
-    }
+  .comment-actions .action-item {
+    font-size: 16px;
+  }
+}
 
-    .nested-replies-container {
-        margin-left: 20px;
-        padding-left: 20px;
-        border-left: 2px solid #555;
-    }
+.nocomment {
+  color: #f1f1f1;
+  text-align: center;
+}
 
-    .body {
-        color: #ddd;
-    }
- 
-   
+.nested-replies-container {
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 2px solid #555;
+}
+
 </style>
 {% endblock %}
 
 {% block body %}
+
+
 
 <div class="container">
   <div class="article-container">
@@ -484,15 +447,15 @@
       {% endif %}
       <h1>{{ article.title }}</h1>
       <hr>
-      <h2>{{ article.subtitle }}</h2>
+      <h2 class="subtitle">{{ article.subtitle }}</h2>
       <div class="article-meta">
         <div class="author">By: {{ article.author.name }}</div>
         <div class="date-posted">Posted on: {{ article.date_posted|date:"F d, Y" }}</div>
         <div class="platforms">Platforms:
           {% for platform in article.platforms.all %}
-          {{platform.name}} |
+          {{ platform.name }} |
           {% endfor %}
-      </div>
+        </div>
       </div>
     </div>
     
@@ -512,31 +475,10 @@
   <div class="comments">
     <h2>Comments</h2> 
     {% include "Blog/add_comment.html" %}
-</div>
-  <aside class="aside">
-    <div class="aside-box">
-      <h3>Latest Articles</h3>
-      <!-- Add latest articles here -->
-    </div>
-    <div class="aside-box">
-      <h3>Top Reviews</h3>
-      <!-- Add top reviews here -->
-    </div>
-    <div class="aside-box">
-      <h3>Guides</h3>
-      <!-- Add guides here -->
-    </div>
-    <div class="aside-box">
-      <h3>Top Games</h3>
-      
-      <!-- Add top games here -->
-    </div>
-  </aside>
+  </div>
 
-
-<script>
-
-
-</script>
+  <footer>
+    <!-- Footer content here -->
+  </footer>
 </div>
 {% endblock %}

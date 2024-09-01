@@ -37,7 +37,16 @@ class ArticleForm(forms.ModelForm):
         if self.instance and self.instance.tag != 'NEWS':
             self.fields['rating'].widget = forms.HiddenInput()
 
-
+class ArticleSearchForm(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        required=False,
+        label="Search Articles",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Search articles, reviews, guides...',
+            'class': 'search-input',  # Matches your CSS styles
+        })
+    )
 
       
         
